@@ -233,4 +233,5 @@ var boardArray = '{' +
         board[i]["color"] = "black";
       }
     }
+    drawBoard();
   }
