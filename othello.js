@@ -75,18 +75,72 @@ var boardArray = '{' +
   var p = 0;
   var canvas = document.getElementById("game");
   var context = canvas.getContext("2d");
+  var board = JSON.parse(boardArray);
   function drawBoard(){
-  for (var x = 0; x <= bw; x += 50) {
-      context.moveTo(0.5 + x + p, p);
-      context.lineTo(0.5 + x + p, bh + p);
-  }
-  for (var x = 0; x <= bh; x += 50) {
-      context.moveTo(p, 0.5 + x + p);
-      context.lineTo(bw + p, 0.5 + x + p);
-  }
-  context.strokeStyle = "black";
-  context.stroke();
+    for (var x = 0; x <= bw; x += 50) {
+        context.moveTo(0.5 + x + p, p);
+        context.lineTo(0.5 + x + p, bh + p);
+    }
+    for (var x = 0; x <= bh; x += 50) {
+        context.moveTo(p, 0.5 + x + p);
+        context.lineTo(bw + p, 0.5 + x + p);
+    }
+    context.strokeStyle = "black";
+    context.stroke();
 
+    for (var i = 0; i <= 63; i++) {
+      if (board[i]["x"] == 0) {
+        x = 25;
+      } else if (board[i]["x"] == 1) {
+        x = 75;
+      } else if (board[i]["x"] == 2) {
+        x = 125;
+      } else if (board[i]["x"] == 3) {
+        x = 175;
+      } else if (board[i]["x"] == 4) {
+        x = 225;
+      } else if (board[i]["x"] == 5) {
+        x = 275;
+      } else if (board[i]["x"] == 6) {
+        x = 325;
+      } else if (board[i]["x"] == 7) {
+        x = 375;
+      }
+
+      if (board[i]["y"] == 0) {
+        y = 25;
+      } else if (board[i]["y"] == 1) {
+        y = 75;
+      } else if (board[i]["y"] == 2) {
+        y = 125;
+      } else if (board[i]["y"] == 3) {
+        y = 175;
+      } else if (board[i]["y"] == 4) {
+        y = 225;
+      } else if (board[i]["y"] == 5) {
+        y = 275;
+      } else if (board[i]["y"] == 6) {
+        y = 325;
+      } else if (board[i]["y"] == 7) {
+        y = 375;
+      }
+
+      if(board[i]["color"] == "white") {
+        context.beginPath();
+        context.arc(x, y, 20, 0, Math.PI*2, true);
+        context.closePath();
+        context.fillStyle = "#FFFFFF";
+        context.fill();
+      } else if(board[i]["color"] == "black") {
+        context.beginPath();
+        context.arc(x, y, 20, 0, Math.PI*2, true);
+        context.closePath();
+        context.fillStyle = "#000000";
+        context.fill();
+      } else if(board[i]["color"] == "clear") {
+        context.clearRect(x-24 , y-24, 49, 49);
+      }
+    }
   }
   drawBoard();
   function getMousePos(canvas, evt) {
@@ -96,67 +150,12 @@ var boardArray = '{' +
       y: evt.clientY - rect.top
     };
   }
-  var board = JSON.parse(boardArray);
   function drawDisk(e) {
     var pos = getMousePos(canvas, e);
     var posx = pos.x;
     var posy = pos.y;
     var x;
     var y;
-    function draw() {
-      for (var i = 0; i <= 63; i++) {
-        if (board[i]["x"] == 0) {
-          x = 25;
-        } else if (board[i]["x"] == 1) {
-          x = 75;
-        } else if (board[i]["x"] == 2) {
-          x = 125;
-        } else if (board[i]["x"] == 3) {
-          x = 175;
-        } else if (board[i]["x"] == 4) {
-          x = 225;
-        } else if (board[i]["x"] == 5) {
-          x = 275;
-        } else if (board[i]["x"] == 6) {
-          x = 325;
-        } else if (board[i]["x"] == 7) {
-          x = 375;
-        }
-
-        if (board[i]["y"] == 0) {
-          y = 25;
-        } else if (board[i]["y"] == 1) {
-          y = 75;
-        } else if (board[i]["y"] == 2) {
-          y = 125;
-        } else if (board[i]["y"] == 3) {
-          y = 175;
-        } else if (board[i]["y"] == 4) {
-          y = 225;
-        } else if (board[i]["y"] == 5) {
-          y = 275;
-        } else if (board[i]["y"] == 6) {
-          y = 325;
-        } else if (board[i]["y"] == 7) {
-          y = 375;
-        }
-
-        if(board[i]["color"] == "white") {
-          context.beginPath();
-          context.arc(x, y, 25, 0, Math.PI*2, true);
-          context.closePath();
-          context.fillStyle = "#FFFFFF";
-          context.fill();
-        } else if(board[i]["color"] == "black") {
-          context.beginPath();
-          context.arc(x, y, 25, 0, Math.PI*2, true);
-          context.closePath();
-          context.fillStyle = "#000000";
-          context.fill();
-        }
-    }
-  }
-  draw();
     if(posx <= 50) {
       x = 25;
     } else if(posx <= 100) {
@@ -229,15 +228,10 @@ var boardArray = '{' +
     } else if (y == 375) {
       boardy = 7;
     }
-    context.beginPath();
-    context.arc(x, y, 25, 0, Math.PI*2, true);
-    context.closePath();
-    context.fillStyle = "#000000";
-    context.fill();
-    console.log(board);
     for (var i = 0;i < 63;i++){
       if(board[i]["x"] == boardx && board[i]["y"] == boardy) {
         board[i]["color"] = "black";
       }
     }
+    drawBoard();
   }
