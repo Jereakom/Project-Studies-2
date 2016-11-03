@@ -5,6 +5,8 @@
   var canvas = document.getElementById("game");
   var context = canvas.getContext("2d");
   var board = JSON.parse(boardArray);
+  var blackdiskCount = 0;
+  var whitediskCount = 0;
   function drawBoard(){
     for (var x = 0; x <= bw; x += 50) {
         context.moveTo(0.5 + x + p, p);
@@ -72,6 +74,7 @@
     }
   }
   drawBoard();
+  showScore();
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -163,9 +166,38 @@
       }
     }
     drawBoard();
+	showScore();
   }
 
   function newGame() {
     board = JSON.parse(boardArray);
     drawBoard();
+	showScore();
   }
+  
+  function getPlayerScore(){
+	for (var i = 0; i < 64; i++) {
+		if (board[i]["color"] == "black") {
+			blackdiskCount = blackdiskCount + 1;
+		}
+	}
+	var playerScore = blackdiskCount.toString();
+	blackdiskCount = 0;
+	document.getElementById('playerscore').innerHTML= playerScore;
+}
+
+  function getOpponentScore(){
+	for (var i = 0; i < 64; i++) {
+		if (board[i]["color"] == "white") {
+			whitediskCount = whitediskCount + 1;
+		}
+	}
+	var opponentScore = whitediskCount.toString();
+	whitediskCount = 0;
+	document.getElementById('opponentscore').innerHTML= opponentScore;
+}
+
+function showScore(){
+	getPlayerScore();
+	getOpponentScore();
+}
