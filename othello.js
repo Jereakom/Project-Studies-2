@@ -157,7 +157,7 @@
     } else if (y == 375) {
       boardy = 7;
     }
-    for (var i = 0;i < 63;i++){
+    for (var i = 0;i < 64;i++){
       if(board[i]["x"] == boardx && board[i]["y"] == boardy) {
         board[i]["color"] = "black";
       }
