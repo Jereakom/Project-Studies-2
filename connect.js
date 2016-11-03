@@ -1,6 +1,9 @@
 var userId = null;
 var username = null;
 var loginReturnJSON = [];
+var logindiv = document.getElementById('loginbutton');
+var logoutdiv = document.getElementById('logoutbutton');
+togglelogin();
 
 function login(name,pass){
 		var loginRequestArray = {"username":name,"password":pass};
@@ -22,9 +25,38 @@ logRequest.send(loginRequestJSON);
 console.log(loginReturnJSON);
 userId = loginReturnJSON["id"];
 username = loginReturnJSON["username"];
+localStorage.setItem('username', username);
+localStorage.setItem('userId', userId);
 console.log(userId);
 console.log(username); 
+console.log(localStorage.getItem('username'));
 window.location.href = "main.html";
+}
 
-	
+function logout(){
+userId = null;
+username = null;
+loginReturnJSON = [];
+localStorage.removeItem('username');
+localStorage.removeItem('userid');
+togglelogin();
+
+}
+
+function togglelogin (){
+	if (localStorage.getItem('username') == null) {
+		logindiv.style.display = 'block';
+logoutdiv.style.display = 'none';
+loginline.style.display = 'none';
+	}
+	else {
+		logindiv.style.display = 'none';
+logoutdiv.style.display = 'block';
+loginline.style.display = 'initial';
+
+	}
+}
+
+function gotologin () {
+	window.location.href = "index.html";
 }
