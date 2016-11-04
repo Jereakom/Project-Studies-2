@@ -1,10 +1,17 @@
-
 body {
     background-image: url("http://orig07.deviantart.net/d03e/f/2008/148/c/3/wood_floor_by_gnrbishop.jpg");
     background-repeat: repeat-x-y;
 	}
 
-.main_page_header{
+
+.jumbotron{
+            background: transparent;
+            height: 8%;
+
+            
+}
+
+.register_page_header{
         text-shadow:0px 1px 20px rgba(12,168,7,1);
     font-weight:bold;
     color:#1F4039;
@@ -19,7 +26,7 @@ body {
 
 }
 
-.main_page_header_p{
+.register_page_header_p{
 
     font-weight:normal;
     color:#000000;
@@ -33,15 +40,7 @@ body {
 
 }
 
-
-.jumbotron{
-    background: transparent;
-    height: 35%;
-
-            
-}
-
-.main_page_form_header{
+.registration_header{
         font-family: "Lucida Calligraphy",cursive;
         font-weight: bold;
         text-shadow:1px 1px 7px rgba(220,223,227,0.9);
@@ -54,8 +53,3 @@ body {
         line-height:1;
     
 }
-
-
-
-
-
