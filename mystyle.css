@@ -27,7 +27,7 @@ body {
     text-decoration: underline;
     word-spacing:2pt;
     font-size:12px;
-    text-align:left;
+    text-align:center;
     font-family:courier new, courier, monospace;
     line-height:1;
 
@@ -36,7 +36,7 @@ body {
 
 .jumbotron{
     background: transparent;
-    height: 35%;
+    height: 30%;
 
             
 }
