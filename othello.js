@@ -196,6 +196,16 @@
     showScore();
   }
 
+  Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+  
   function findViableMoves()
   {
     var color;
@@ -210,10 +220,12 @@
       color = "black";
       countercolor = "white";
     }
+	
+
     for (var i = 0; i < 64; i++) {
 
 
-      if(board[i]["color"] == color)
+      if((board[i]["color"] == color))
       {
         // console.log(board[i]);
         var current = board[i];
@@ -228,6 +240,8 @@
 
         var downRight = board[i+9];
         var downLeft = board[i+7];
+		
+		
 
         var pairs =
         [
@@ -243,19 +257,30 @@
         var sides = [
           0,1,2,3,4,5,6,7,8,15,16,23,24,31,32,39,40,47,48,55,56,57,58,59,60,61,62,63
         ];
+		var left_edge = [
+		  0,8,16,24,32,40,48,56
+		];
+		var right_edge = [
+		  7,15,23,31,39,47,55,63
+		];
+	
         console.log(sides);
         // console.log("Array");
         // console.log(pairs[0][2]);
         // for (var ind = 0; ind < pairs.length; ind++) {
-        if (up["color"] == countercolor)
+        
+		
+	if(i>7)
+	{
+		if (up["color"] == countercolor)
         {
           if (!down)
           {
             console.log("stable piece");
           }
           else if (down["color"] == "clear")
-          {
-            down["color"] = "viable";
+          { 
+			down["color"] = "viable";
           }
           else if (down["color"] == color)
           {
@@ -270,7 +295,8 @@
                 }
                 else if (check["color"] == "clear" || check["color"] == "viable")
                 {
-                  check["color"] = "viable";
+                 
+				  check["color"] = "viable";
                   break;
                 }
                 else if (check["color"] == countercolor)
@@ -286,8 +312,11 @@
             }
           }
         }
+	}
 
-        if (down["color"] == countercolor)
+    if(i<56)
+	{
+		if (down["color"] == countercolor)
         {
           if (!up)
           {
@@ -325,7 +354,8 @@
 
             }
           }
-        }
+		}
+	}
 
         if (left["color"] == countercolor)
         {
@@ -344,7 +374,11 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
-                if (check["color"] == color)
+                if (!left_edge.contains(mpc))
+				{
+					break;
+				}
+				else if (check["color"] == color)
                 {
                   continue;
                 }
@@ -384,7 +418,11 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
-                if (check["color"] == color)
+				if (!right_edge.contains(mpc))
+				{
+					break;
+				}
+                else if (check["color"] == color)
                 {
                   continue;
                 }
@@ -406,7 +444,8 @@
             }
           }
         }
-
+	if(i>6)
+	{
         if (upRight["color"] == countercolor)
         {
           if (!downLeft)
@@ -424,6 +463,10 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
+				if (!sides.contains(mpc))
+				{
+					break;
+				}
                 if (check["color"] == color)
                 {
                   continue;
@@ -446,7 +489,9 @@
             }
           }
         }
-
+	}
+	if(i<55)
+	{
         if (downLeft["color"] == countercolor)
         {
           if (!upRight)
@@ -464,6 +509,10 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
+				if (!sides.contains(mpc))
+				{
+					break;
+				}
                 if (check["color"] == color)
                 {
                   continue;
@@ -485,8 +534,10 @@
 
             }
           }
-        }
-
+		}
+	}
+	if(i>8)
+	{
         if (upLeft["color"] == countercolor)
         {
           if (!downRight)
@@ -504,6 +555,10 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
+				if (!sides.contains(mpc))
+				{
+					break;
+				}
                 if (check["color"] == color)
                 {
                   continue;
@@ -525,8 +580,10 @@
 
             }
           }
-        }
-
+		}
+	}
+	if(i<57)
+	{
         if (downRight["color"] == countercolor)
         {
           if (!upLeft)
@@ -544,6 +601,10 @@
               if (mpc > 0 && mpc < 64)
               {
                 var check = board[mpc];
+				if (!sides.contains(mpc))
+				{
+					break;
+				}
                 if (check["color"] == color)
                 {
                   continue;
@@ -565,7 +626,8 @@
 
             }
           }
-        }
+		}
+	}
 
         // }
       }
