@@ -226,59 +226,347 @@
         var upRight = board[i-7];
         var upLeft = board[i-9];
 
-        var downRight = board[i+7];
-        var downLeft = board[i+9];
+        var downRight = board[i+9];
+        var downLeft = board[i+7];
 
         var pairs =
         [
-          [down, up, 0],
-          [right, left, 1],
-          [upRight, downLeft, 2],
-          [upLeft, downRight, 3],
+          [down, up, -8],
+          [up, down, 8],
+          [right, left, -1],
+          [left, right, 1],
+          [upRight, downLeft, 7],
+          [downLeft, upRight, -7],
+          [upLeft, downRight, 9],
+          [downRight, upLeft, -9],
         ];
+        var sides = [
+          0,1,2,3,4,5,6,7,8,15,16,23,24,31,32,39,40,47,48,55,56,57,58,59,60,61,62,63
+        ];
+        console.log(sides);
         // console.log("Array");
         // console.log(pairs[0][2]);
         // for (var ind = 0; ind < pairs.length; ind++) {
-          if (up["color"] == countercolor)
+        if (up["color"] == countercolor)
+        {
+          if (!down)
           {
-            if (!down)
-            {
-              console.log("stable piece");
-            }
-            else if (down["color"] == "clear")
-            {
-              down["color"] = "viable";
-            }
-            else if (down["color"] == color)
-            {
-              var ci = i;
-              for (var i2 = 1; i2 < 8; i2++) {
-                var mpc = i + 8 * i2;
-                if (mpc > 0 && mpc < 64)
+            console.log("stable piece");
+          }
+          else if (down["color"] == "clear")
+          {
+            down["color"] = "viable";
+          }
+          else if (down["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i + 8 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
                 {
-                  var check = board[mpc];
-                  if (check["color"] == color)
-                  {
-                    continue;
-                  }
-                  else if (check["color"] == "clear" || check["color"] == "viable")
-                  {
-                    check["color"] = "viable";
-                    break;
-                  }
-                  else if (check["color"] == countercolor)
-                  {
-                    break;
-                  }
+                  continue;
                 }
-                else
+                else if (check["color"] == "clear" || check["color"] == "viable")
                 {
-                  i2 = 8 ;
+                  check["color"] = "viable";
+                  break;
                 }
-
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
               }
+              else
+              {
+                i2 = 8 ;
+              }
+
             }
           }
+        }
+
+        if (down["color"] == countercolor)
+        {
+          if (!up)
+          {
+            console.log("stable piece");
+          }
+          else if (up["color"] == "clear")
+          {
+            up["color"] = "viable";
+          }
+          else if (up["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i - 8 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (left["color"] == countercolor)
+        {
+          if (!right)
+          {
+            console.log("stable piece");
+          }
+          else if (right["color"] == "clear")
+          {
+            right["color"] = "viable";
+          }
+          else if (right["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i + 1 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (right["color"] == countercolor)
+        {
+          if (!left)
+          {
+            console.log("stable piece");
+          }
+          else if (left["color"] == "clear")
+          {
+            left["color"] = "viable";
+          }
+          else if (left["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i - 1 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (upRight["color"] == countercolor)
+        {
+          if (!downLeft)
+          {
+            console.log("stable piece");
+          }
+          else if (downLeft["color"] == "clear")
+          {
+            downLeft["color"] = "viable";
+          }
+          else if (downLeft["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i + 7 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (downLeft["color"] == countercolor)
+        {
+          if (!upRight)
+          {
+            console.log("stable piece");
+          }
+          else if (upRight["color"] == "clear")
+          {
+            upRight["color"] = "viable";
+          }
+          else if (upRight["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i - 7 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (upLeft["color"] == countercolor)
+        {
+          if (!downRight)
+          {
+            console.log("stable piece");
+          }
+          else if (downRight["color"] == "clear")
+          {
+            downRight["color"] = "viable";
+          }
+          else if (downRight["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i + 9 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
+        if (downRight["color"] == countercolor)
+        {
+          if (!upLeft)
+          {
+            console.log("stable piece");
+          }
+          else if (upLeft["color"] == "clear")
+          {
+            upLeft["color"] = "viable";
+          }
+          else if (upLeft["color"] == color)
+          {
+            for (var i2 = 1; i2 < 8; i2++) {
+              var mpc = i - 9 * i2;
+              if (mpc > 0 && mpc < 64)
+              {
+                var check = board[mpc];
+                if (check["color"] == color)
+                {
+                  continue;
+                }
+                else if (check["color"] == "clear" || check["color"] == "viable")
+                {
+                  check["color"] = "viable";
+                  break;
+                }
+                else if (check["color"] == countercolor)
+                {
+                  break;
+                }
+              }
+              else
+              {
+                i2 = 8 ;
+              }
+
+            }
+          }
+        }
+
         // }
       }
     }
