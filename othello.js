@@ -77,6 +77,10 @@
         context.closePath();
         context.fillStyle = "#000000";
         context.fill();
+        if(board[i]["color"] == "viable")
+        {
+          board[i]["color"] = "clear";
+        }
       }
     }
   }
@@ -186,17 +190,14 @@
     }
     if (canaddturn)
     {
-      console.log(turn);
       turn++;
     }
-    console.log(board);
     drawBoard();
     showScore();
   }
 
-  function findViableMoves(event)
+  function findViableMoves()
   {
-    console.log(turn);
     var color;
     var countercolor;
     if ((turn % 2) != 0)
@@ -210,22 +211,18 @@
       countercolor = "white";
     }
     for (var i = 0; i < 64; i++) {
-      if(board[i]["color"] == "viable")
-      {
-        board[i]["color"] = "clear";
-      }
-      else if(board[i]["color"] == color)
+
+
+      if(board[i]["color"] == color)
       {
         // console.log(board[i]);
         var current = board[i];
-
         var left = board[i-1];
         var right = board[i+1];
 
 
         var up = board[i-8];
         var down = board[i+8];
-
         var upRight = board[i-7];
         var upLeft = board[i-9];
 
@@ -242,21 +239,21 @@
         // console.log("Array");
         // console.log(pairs[0][2]);
         // for (var ind = 0; ind < pairs.length; ind++) {
-          if (down["color"] == countercolor)
+          if (up["color"] == countercolor)
           {
-            if (!up)
+            if (!down)
             {
               console.log("stable piece");
             }
-            else if (up["color"] == "clear")
+            else if (down["color"] == "clear")
             {
-              up["color"] = "viable";
+              down["color"] = "viable";
             }
-            else if (up["color"] == color)
+            else if (down["color"] == color)
             {
+              var ci = i;
               for (var i2 = 1; i2 < 8; i2++) {
-
-                var mpc = i - 8 * i2;
+                var mpc = i + 8 * i2;
                 if (mpc > 0 && mpc < 64)
                 {
                   var check = board[mpc];
@@ -284,8 +281,8 @@
           }
         // }
       }
-      drawDisk(event);
     }
+    drawBoard();
   }
 
   function newGame() {
