@@ -1,9 +1,9 @@
 var userId = null;
 var username = null;
 var loginReturnJSON = [];
-var logindiv = document.getElementById('loginbutton');
-var logoutdiv = document.getElementById('logoutbutton');
-var registerdiv = document.getElementById('registerbutton');
+var logindiv = document.getElementById('loginButton');
+var logoutdiv = document.getElementById('logoutButton');
+var registerdiv = document.getElementById('registerButton');
 togglelogin();
 
 function login(name,pass){
@@ -61,7 +61,7 @@ function register (name, pass, conf_pass) {
 		var registerRequestJSON = JSON.stringify(registerRequestArray);
 		if (pass == conf_pass){
 	regRequest = new XMLHttpRequest();
-	var url = "http://project-studies-2.herokuapp.com/register";
+	var url = "https://project-studies-2.herokuapp.com/register";
 	regRequest.open("POST", url, false);
 	regRequest.setRequestHeader("Content-type", "application/json");
 	regRequest.onreadystatechange = function () {
