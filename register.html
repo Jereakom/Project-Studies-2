@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	    <script src="connect.js"></script>
 
         <link rel="stylesheet" type="text/css" href="registerstyle.css">
@@ -21,56 +21,28 @@
 
               <!--Back Button-->
             <div class = "back_button_div">
-                    <a href ="index.html">     
-                    <img src ="http://www.clipartbest.com/cliparts/ncB/B5r/ncBB5rpei.png" style="width:50px;height:50px;"></a>     
+                    <a href ="index.html">
+                    <img src ="http://www.clipartbest.com/cliparts/ncB/B5r/ncBB5rpei.png" style="width:50px;height:50px;"></a>
                     <p class="register_page_header_p">Main Page
                     </p>
              </div>
 
-            
+
             <!--Registration Part-->
-            <div class = "registration_div">
-                <h2 class ="registration_header"> Register</h2>
-         
+            <form class="form-inline">
+                <h2 class="main_page_form_header">Register</h2>
+                <br/><br/>
                 <div class="form-group">
-                    <label for="first_name">FIrst Name</label>
-                    <input type="text" class="form-control" id="first_name" style =" width : 300px; " required >
-                </div>
-
-                 <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" style =" width : 300px; " required >
-                </div>
-                
-                <!--Username-->
+                     <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email">
+                </div><br/><br/>
                 <div class="form-group">
-                    <label for="user_name">User Name</label>
-                    <input type="text" class="form-control" id="user_name" style =" width : 300px; "  placeholder= " Some unique username for yourself" required >
-                </div>
-
-                <!--Email address-->
-                <div class="form-group">
-                    <label for="inputEmail" class="control-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail"  name ="usernameBOX" placeholder="Email" data-error="Bruh, that email address is invalid" style =" width : 300px; " required>
-                     <div class="help-block with-errors"></div>
-                </div>                    <br>
-
-                <!--Passwords-->
-                <div class="form-group">
-                    <label for="inputPassword" class="control-label">Password</label>
-                    <div class="form-inline row">
-                        <div class="form-group col-sm-6">
-                            <input type="password" data-minlength="6" class="form-control" id="inputPassword"  name="passwordBox"placeholder="Password"  style =" width : 300px; "required>
-                            <div class="help-block">Minimum of 6 characters</div>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <input type="password" class="form-control" id="inputPasswordConfirm"  name="confirmPasswordBox" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm"  style =" width : 300px; " required>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-                </div>      
-                <button type="submit" class="btn btn-default btn-lg btn-primary" id="registerButton" onclick="register(this.form.usernameBox.value, this.form.passwordBox.value, this.form.confirmPasswordBox.value">Submit</button>          
-            </div>
+                    <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password">
+                </div><br/><br/>
+				            <div class="form-group">
+                    <input type="password" class="form-control" id="exampleInputPassword4" name="confirmPasswordBox" placeholder="Confirm Password">
+                </div><br/><br/>
+                <button type="button" class="btn btn-default" id="registerButton" onclick="register(this.form.usernameBox.value, this.form.passwordBox.value, this.form.confirmPasswordBox.value)">Register</button>
+            </form>
         </div>
     </body>
 </HTML>

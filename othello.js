@@ -165,6 +165,7 @@
         board[i]["color"] = "black";
       }
     }
+    console.log(board);
     drawBoard();
 	showScore();
   }
@@ -174,7 +175,7 @@
     drawBoard();
 	showScore();
   }
-  
+
   function getPlayerScore(){
 	for (var i = 0; i < 64; i++) {
 		if (board[i]["color"] == "black") {
