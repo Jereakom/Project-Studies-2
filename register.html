@@ -7,12 +7,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
         <link rel="stylesheet" type="text/css" href="mystyle.css">
-
-        <SCRIPT>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-                });
-        </SCRIPT>
 		
     </HEAD>
     <body>
@@ -27,7 +21,7 @@
 
             <!--Form or Input part-->
             <form class="form-inline">
-                <h2 class="main_page_form_header">Log In</h2>                         
+                <h2 class="main_page_form_header">Register</h2>                         
                 <br/><br/>
                 <div class="form-group">
                      <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email">
@@ -35,14 +29,13 @@
                 <div class="form-group">
                     <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password">
                 </div><br/><br/>
-                <button type="button" class="btn btn-default" id="loginButton" onclick="login(this.form.usernameBox.value, this.form.passwordBox.value)">Log In</button>
-                <img src ="http://www.freeiconspng.com/uploads/3d-man-question-icon-13.png" style="width:50px;height:50px;" data-toggle="tooltip" data-placement="right" title="Loggin in helps to keep track of the player and it helps to improve the overall system">     
+				<div class="form-group">
+                    <input type="password" class="form-control" id="exampleInputPassword4" name="confirmPasswordBox" placeholder="Confirm Password">
+                </div><br/><br/>
+                <button type="button" class="btn btn-default" id="registerButton" onclick="register(this.form.usernameBox.value, this.form.passwordBox.value, this.form.confirmPasswordBox.value)">Register</button>
             </form>
 
-            <!--Register Part-->
-            <div class="main_page_register_div_class">
-                <p>Not a member, register by<a href="#"> Clicking here</a></p>
-            </div>
+
         </div>
     </body>
 	<script src="connect.js"></script>

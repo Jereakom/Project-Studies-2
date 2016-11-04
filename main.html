@@ -5,8 +5,21 @@
     <title>Othello</title>
   </head>
   <body>
+  <div style="float:right;">
+  <h4 id="loginline">Logged as : <script>
+document.write(localStorage.getItem('username'));
+</script></h4><br><div style="float:right;" id="logoutbutton"><button type="button" class="btn btn-default" id="logoutButton" onclick="logout();"> LOGOUT </button></div>
+<div style="float:right;" id="loginbutton"><button type="button" class="btn btn-default" id="loginButton" onclick="gotologin();"> LOGIN </button></div>
+<div style="float:right;" id="registerbutton"><button type="button" class="btn btn-default" id="registerButton" onclick="gotoregister();"> REGISTER </button></div>
+</div>
     <h1>Othello</h1>
-    <canvas id="game" width="400" height="400" style="border:1px solid #FFFFFF;background-color:#33cc33;" onclick="drawDisk(event, boardString)"></canvas>
+    <canvas id="game" width="400" height="400" style="border:1px solid #FFFFFF;background-color:#33cc33;" onclick="drawDisk(event)"></canvas>
+	<br>
+	<button onclick="newGame()">New Game</button>
+	<h3 style='display:inline; font-weight:bold;'> Player : <span id="playerscore" style="color:blue;"></span> Opponent : <span id="opponentscore" style="color:blue;"></span></p>
+	
   </body>
+  <script src="data.js"></script>
   <script src="othello.js"></script>
+  <script src="connect.js"></script>
 </html>
