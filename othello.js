@@ -329,7 +329,7 @@
 
         if (left["color"] == countercolor)
         {
-          if (!right)
+          if (sides.indexOf(i) != -1)
           {
             console.log("stable piece");
           }
@@ -369,7 +369,7 @@
 
         if (right["color"] == countercolor)
         {
-          if (!left)
+          if (sides.indexOf(i) != -1)
           {
             console.log("stable piece");
           }
