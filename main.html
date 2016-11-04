@@ -16,8 +16,9 @@ document.write(localStorage.getItem('username'));
     <canvas id="game" width="400" height="400" style="border:1px solid #FFFFFF;background-color:#33cc33;" onclick="drawDisk(event)"></canvas>
 	<br>
 	<button onclick="newGame()">New Game</button>
+  <button onclick="findViableMoves(event)">Viable moves</button>
 	<h3 style='display:inline; font-weight:bold;'> Player : <span id="playerscore" style="color:blue;"></span> Opponent : <span id="opponentscore" style="color:blue;"></span></p>
-	
+
   </body>
   <script src="data.js"></script>
   <script src="othello.js"></script>
