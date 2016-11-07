@@ -194,7 +194,7 @@
     }
     drawBoard();
     showScore();
-	findViableMoves();
+    findViableMoves();
   }
 
   Array.prototype.contains = function(obj) {
@@ -206,7 +206,8 @@
     }
     return false;
 }
-  
+
+
   function findViableMoves()
   {
     var color;
@@ -221,12 +222,11 @@
       color = "black";
       countercolor = "white";
     }
-	
 
     for (var i = 0; i < 64; i++) {
 
 
-      if((board[i]["color"] == color))
+      if(board[i]["color"] == color)
       {
         // console.log(board[i]);
         var current = board[i];
@@ -241,8 +241,6 @@
 
         var downRight = board[i+9];
         var downLeft = board[i+7];
-		
-		
 
         var pairs =
         [
@@ -258,399 +256,476 @@
         var sides = [
           0,1,2,3,4,5,6,7,8,15,16,23,24,31,32,39,40,47,48,55,56,57,58,59,60,61,62,63
         ];
+
 		var left_edge = [
 		  0,8,16,24,32,40,48,56
 		];
 		var right_edge = [
 		  7,15,23,31,39,47,55,63
 		];
-		var up_edge = [
-		  0,1,2,3,4,5,6,7
-		];
-		var down_edge = [
-		  63,62,61,60,59,58,57,56
-		]
-	
-        console.log(sides);
+    var up_edge = [
+      0,1,2,3,4,5,6,7
+    ];
+    var down_edge = [
+      63,62,61,60,59,58,57,56
+    ]
+
         // console.log("Array");
         // console.log(pairs[0][2]);
         // for (var ind = 0; ind < pairs.length; ind++) {
-        
-		
-	if(i>7)
-	{
-		if (up["color"] == countercolor)
+  if(i<56 && i>7) {checkViable(-8, up, up_edge);}
+  if(i>7 && i<56) {checkViable(8, down, down_edge);}
+  if (i>0 && i<63) {checkViable(-1, left, left_edge);}
+  if (i>0 && i<63) {checkViable(1, right, right_edge);}
+  if(i<55 && i>8) {checkViable(-9, upLeft, sides);}
+  if(i<57 && i>6) {checkViable(-7, upRight, sides);}
+  if(i>6 && i<57) {checkViable(7, downLeft, sides);}
+  if(i>8 && i<55) {checkViable(9, downRight, sides);}
+
+  function checkViable(add, dir, edge) {
+    if (dir == up)
+    {
+      counterdir = down;
+	  
+    } else if (dir == down)
+    {
+      counterdir = up;
+    } else if (dir == left)
+    {
+      counterdir = right;
+    } else if (dir == right)
+    {
+      counterdir = left;
+    } else if (dir == upRight)
+    {
+      counterdir = downLeft;
+    } else if (dir == downRight)
+    {
+      counterdir = upLeft;
+    } else if (dir == upLeft)
+    {
+      counterdir = downRight;
+    } else if (dir == downLeft)
+    {
+      counterdir = upRight;
+    }
+    if (counterdir["color"] == countercolor)
         {
-          if (!down)
+          if (!counterdir)
           {
             console.log("stable piece");
           }
-          else if (down["color"] == "clear")
-          { 
-			down["color"] = "viable";
+          else if (dir["color"] == "clear")
+          {
+			      dir["color"] = "viable";
           }
-          else if (down["color"] == color)
+          else if (dir["color"] == color)
           {
             for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i + 8 * i2;
-              if (mpc >= 0 && mpc < 64 && !down_edge.contains(mpc))
+              var mpc = i + add * i2;
+
+              if (mpc >= 0 && mpc < 64)
+			  { 
+			  var x_check = board[mpc]["x"];
+			  var x_previous = board[mpc-add]["x"];
+			  
+			  var y_check = board[mpc]["y"];
+			  var y_previous = board[mpc-add]["y"];
+			  
+			  var x_diff = x_check - x_previous;
+			  var y_diff = y_check - y_previous;
+			  
+			  /*console.log("x_diff : " + x_diff);
+			  console.log("y_diff : " + y_diff);
+			  console.log("mpc : " + mpc);*/
+			  
+			  if  ((x_diff >= -1) && (x_diff <= 1) && (y_diff >= -1) && (y_diff <= 1))
               {
                 var check = board[mpc];
+				
                 if (check["color"] == color)
                 {
                   continue;
                 }
                 else if (check["color"] == "clear" || check["color"] == "viable")
                 {
-                 
-				  check["color"] = "viable";
+				          check["color"] = "viable";
+
                   break;
                 }
                 else if (check["color"] == countercolor)
                 {
                   break;
                 }
-				if (down_edge.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
+              }else
               {
-                i2 = 8 ;
+                break;
               }
-
+			  }
+              
             }
           }
         }
-	}
+  }
 
-    if(i<56)
-	{
-		if (down["color"] == countercolor)
-        {
-          if (!up)
-          {
-            console.log("stable piece");
-          }
-          else if (up["color"] == "clear")
-          {
-            up["color"] = "viable";
-          }
-          else if (up["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i - 8 * i2;
-              if (mpc >= 0 && mpc < 64 && !up_edge.contains(mpc))
-              {
-                var check = board[mpc];
-                if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (up_edge.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
 
-            }
-          }
-		}
-	}
-if (i>0 && i<64) {
-        if (left["color"] == countercolor)
-        {
-          if (sides.indexOf(i) != -1)
-          {
-            console.log("stable piece");
-          }
-          else if (right["color"] == "clear")
-          {
-            right["color"] = "viable";
-          }
-          else if (right["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i + 1 * i2;
-              if (mpc >= 0 && mpc < 64 && !right_edge.contains(mpc))
-              {
-                var check = board[mpc];
-                
-				if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (right_edge.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
 
-            }
-          }
-        }
-}
-if (i>0 && i<64) {
-        if (right["color"] == countercolor)
-        {
-          if (sides.indexOf(i) != -1)
-          {
-            console.log("stable piece");
-          }
-          else if (left["color"] == "clear")
-          {
-            left["color"] = "viable";
-          }
-          else if (left["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i - 1 * i2;
-              if (mpc >= 0 && mpc < 64 && !left_edge.contains(mpc))
-              {
-                var check = board[mpc];
-				
-                 if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (left_edge.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
-
-            }
-          }
-        }
-}
-	if(i>6 && i<56 )
-	{
-        if (upRight["color"] == countercolor)
-        {
-          if (!downLeft)
-          {
-            console.log("stable piece");
-          }
-          else if (downLeft["color"] == "clear")
-          {
-            downLeft["color"] = "viable";
-          }
-          else if (downLeft["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i + 7 * i2;
-              if (mpc >= 0 && mpc < 62 && !sides.contains(mpc))
-              {
-                var check = board[mpc];
-				
-                if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (sides.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
-
-            }
-          }
-        }
-	}
-	if(i<57)
-	{
-        if (downLeft["color"] == countercolor)
-        {
-          if (!upRight)
-          {
-            console.log("stable piece");
-          }
-          else if (upRight["color"] == "clear")
-          {
-            upRight["color"] = "viable";
-          }
-          else if (upRight["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i - 7 * i2;
-              if (mpc >= 2 && mpc < 64 && !sides.contains(mpc))
-              {
-                var check = board[mpc];
-				
-                if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (sides.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
-
-            }
-          }
-		}
-	}
-	if(i>8)
-	{
-        if (upLeft["color"] == countercolor)
-        {
-          if (!downRight)
-          {
-            console.log("stable piece");
-          }
-          else if (downRight["color"] == "clear")
-          {
-            downRight["color"] = "viable";
-          }
-          else if (downRight["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i + 9 * i2;
-              if (mpc >= 0 && mpc < 64 && !sides.contains(mpc))
-              {
-                var check = board[mpc];
-				
-                if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (sides.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
-
-            }
-          }
-		}
-	}
-	if(i<55)
-	{
-        if (downRight["color"] == countercolor)
-        {
-          if (!upLeft)
-          {
-            console.log("stable piece");
-          }
-          else if (upLeft["color"] == "clear")
-          {
-            upLeft["color"] = "viable";
-          }
-          else if (upLeft["color"] == color)
-          {
-            for (var i2 = 1; i2 < 8; i2++) {
-              var mpc = i - 9 * i2;
-              if (mpc >= 0 && mpc < 64 && !sides.contains(mpc))
-              {
-                var check = board[mpc];
-				
-                if (check["color"] == color)
-                {
-                  continue;
-                }
-                else if (check["color"] == "clear" || check["color"] == "viable")
-                {
-                  check["color"] = "viable";
-                  break;
-                }
-                else if (check["color"] == countercolor)
-                {
-                  break;
-                }
-				if (sides.contains(mpc))
-				{
-					break;
-				}
-              }
-              else
-              {
-                i2 = 8 ;
-              }
-
-            }
-          }
-		}
-	}
+	// if(i>7)
+	// {
+	// 	if (up["color"] == countercolor)
+  //   {
+  //     if (!down)
+  //     {
+  //       console.log("stable piece");
+  //     }
+  //     else if (down["color"] == "clear")
+  //     {
+	//       down["color"] = "viable";
+  //     }
+  //     else if (down["color"] == color)
+  //     {
+  //       for (var i2 = 1; i2 < 8; i2++) {
+  //         var mpc = i + 8 * i2;
+  //         if (mpc > 0 && mpc < 64)
+  //         {
+  //           var check = board[mpc];
+  //           if (check["color"] == color)
+  //           {
+  //             continue;
+  //           }
+  //           else if (check["color"] == "clear" || check["color"] == "viable")
+  //           {
+	// 	          check["color"] = "viable";
+  //             break;
+  //           }
+  //           else if (check["color"] == countercolor)
+  //           {
+  //             break;
+  //           }
+  //         }
+  //         else
+  //         {
+  //           i2 = 8 ;
+  //         }
+  //       }
+  //     }
+  //   }
+	// }
+  //
+  //   if(i<56)
+	// {
+	// 	if (down["color"] == countercolor)
+  //       {
+  //         if (!up)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (up["color"] == "clear")
+  //         {
+  //           up["color"] = "viable";
+  //         }
+  //         else if (up["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i - 8 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+  //               if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+	// 	}
+	// }
+  //
+  //       if (left["color"] == countercolor)
+  //       {
+  //         if (sides.indexOf(i) != -1)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (right["color"] == "clear")
+  //         {
+  //           right["color"] = "viable";
+  //         }
+  //         else if (right["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i + 1 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+  //               if (!left_edge.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+	// 			else if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+  //       }
+  //
+  //       if (right["color"] == countercolor)
+  //       {
+  //         if (sides.indexOf(i) != -1)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (left["color"] == "clear")
+  //         {
+  //           left["color"] = "viable";
+  //         }
+  //         else if (left["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i - 1 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+	// 			if (!right_edge.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+  //               else if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+  //       }
+	// if(i>6)
+	// {
+  //       if (upRight["color"] == countercolor)
+  //       {
+  //         if (!downLeft)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (downLeft["color"] == "clear")
+  //         {
+  //           downLeft["color"] = "viable";
+  //         }
+  //         else if (downLeft["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i + 7 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+	// 			if (!sides.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+  //               if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+  //       }
+	// }
+	// if(i<55)
+	// {
+  //       if (downLeft["color"] == countercolor)
+  //       {
+  //         if (!upRight)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (upRight["color"] == "clear")
+  //         {
+  //           upRight["color"] = "viable";
+  //         }
+  //         else if (upRight["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i - 7 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+	// 			if (!sides.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+  //               if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+	// 	}
+	// }
+	// if(i>8)
+	// {
+  //       if (upLeft["color"] == countercolor)
+  //       {
+  //         if (!downRight)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (downRight["color"] == "clear")
+  //         {
+  //           downRight["color"] = "viable";
+  //         }
+  //         else if (downRight["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i + 9 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+	// 			if (!sides.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+  //               if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+	// 	}
+	// }
+	// if(i<57)
+	// {
+  //       if (downRight["color"] == countercolor)
+  //       {
+  //         if (!upLeft)
+  //         {
+  //           console.log("stable piece");
+  //         }
+  //         else if (upLeft["color"] == "clear")
+  //         {
+  //           upLeft["color"] = "viable";
+  //         }
+  //         else if (upLeft["color"] == color)
+  //         {
+  //           for (var i2 = 1; i2 < 8; i2++) {
+  //             var mpc = i - 9 * i2;
+  //             if (mpc > 0 && mpc < 64)
+  //             {
+  //               var check = board[mpc];
+	// 			if (!sides.contains(mpc))
+	// 			{
+	// 				break;
+	// 			}
+  //               if (check["color"] == color)
+  //               {
+  //                 continue;
+  //               }
+  //               else if (check["color"] == "clear" || check["color"] == "viable")
+  //               {
+  //                 check["color"] = "viable";
+  //                 break;
+  //               }
+  //               else if (check["color"] == countercolor)
+  //               {
+  //                 break;
+  //               }
+  //             }
+  //             else
+  //             {
+  //               i2 = 8 ;
+  //             }
+  //
+  //           }
+  //         }
+	// 	}
+	// }
 
         // }
       }
@@ -662,59 +737,6 @@ if (i>0 && i<64) {
     board = JSON.parse(boardArray);
     drawBoard();
 	showScore();
-  }
-
-  function getWinner() {
-    for (var i = 0; i < 64; i++) {
-      var viability = 0;
-      var blackScore = 0;
-      var whiteScore = 0;
-
-      var gameRequestArray = {};
-      var id = localStorage.getItem("userId");
-      var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
-
-      if (board[i]["color"] == "viable")
-      {
-        viability++;
-      }
-      else if (board[i]["color"] == "black")
-      {
-        blackScore++;
-      }
-      else if (board[i]["color"] == "white")
-      {
-        whiteScore++;
-      }
-      if (viability == 0)
-      {
-        var winner;
-        if (blackScore == whiteScore)
-        {
-          winner = "tie";
-        }
-        else if (blackScore > whiteScore)
-        {
-          gameRequestArray = {"win":1};
-        }
-        else
-        {
-          winner = "white";
-        }
-
-        logRequest.send(gameRequestJSON);
-        var gameRequestJSON = JSON.stringify(gameRequestArray);
-
-        logRequest = new XMLHttpRequest();
-        logRequest.open("POST", url, false);
-        logRequest.setRequestHeader("Content-type", "application/json");
-        logRequest.onreadystatechange = function () {
-          if (logRequest.readyState == 4 && logRequest.status == 200) {
-              gameReturnJSON = JSON.parse(logRequest.responseText);
-          }
-        }
-      }
-    }
   }
 
   function getPlayerScore(){
