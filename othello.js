@@ -176,6 +176,34 @@
 	showScore();
   }
 
+  function getWinner() {
+    for (var i = 0; i < 64; i++) {
+      var viability = 0;
+      var blackScore = 0;
+      var whiteScore = 0;
+      if (board[i]["color"] == "viable")
+      {
+        viability++;
+      }
+      else if (board[i]["color"] == "black")
+      {
+        blackScore++;
+      }
+      else if (board[i]["color"] == "white")
+      {
+        whiteScore++;
+      }
+      if (viability == 0)
+      {
+        var winner = (blackScore > whiteScore) ? "Black won!":"White won!";
+        if (blackScore == whiteScore)
+        {
+          winner = "Tie!";
+        }
+      }
+    }
+  }
+
   function getPlayerScore(){
 	for (var i = 0; i < 64; i++) {
 		if (board[i]["color"] == "black") {
