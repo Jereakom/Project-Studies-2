@@ -311,11 +311,19 @@
     }
     if (counterdir["color"] == countercolor)
         {
+			var x_check = dir["x"];
+			  var x_previous = board[i]["x"];
+			  
+			  var y_check = dir["y"];
+			  var y_previous = board[i]["y"];
+			  
+			  var x_diff = x_check - x_previous;
+			  var y_diff = y_check - y_previous;
           if (!counterdir)
           {
             console.log("stable piece");
           }
-          else if (dir["color"] == "clear")
+          else if ((dir["color"] == "clear")&&((x_diff >= -1) && (x_diff <= 1) && (y_diff >= -1) && (y_diff <= 1)))
           {
 			      dir["color"] = "viable";
           }
