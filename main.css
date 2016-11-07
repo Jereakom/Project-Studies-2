@@ -1,0 +1,19 @@
+body {
+    background-image: url("http://orig07.deviantart.net/d03e/f/2008/148/c/3/wood_floor_by_gnrbishop.jpg");
+    background-repeat: repeat-x-y;
+	}
+
+
+.game_header{
+    font-family: "Lucida Calligraphy",cursive;
+    font-weight: bold;
+    text-shadow:1px 1px 7px rgba(220,223,227,0.9);
+    font-weight:normal;
+    color:#1E7524;
+    letter-spacing:1pt;
+    word-spacing:2pt;
+    font-size:35px;
+    text-align:left;
+    line-height:1;
+    margin-top:5%; 
+}

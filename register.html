@@ -17,9 +17,8 @@
             <!--Header Part-->
             <div class="jumbotron">
                 <h1 class= "register_page_header">OTHELLO</h1>
-           </div>
 
-              <!--Back Button-->
+                <!--Back Button-->
             <div class = "back_button_div">
                     <a href ="index.html">
                     <img src ="http://www.clipartbest.com/cliparts/ncB/B5r/ncBB5rpei.png" style="width:50px;height:50px;"></a>
@@ -27,21 +26,25 @@
                     </p>
              </div>
 
+           </div>
+
+              
+
 
             <!--Registration Part-->
             <form class="form-inline">
-                <h2 class="main_page_form_header">Register</h2>
+                <h2 class="registration_header">Register</h2>
                 <br/><br/>
                 <div class="form-group">
-                     <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email">
+                     <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email" style =" width : 300px; " required>
                 </div><br/><br/>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password">
+                    <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password" style =" width : 300px; " required>
                 </div><br/><br/>
 				            <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword4" name="confirmPasswordBox" placeholder="Confirm Password">
+                    <input type="password" class="form-control" id="exampleInputPassword4" name="confirmPasswordBox" placeholder="Confirm Password" style =" width : 300px; "  required>
                 </div><br/><br/>
-                <button type="button" class="btn btn-default" id="registerButton" onclick="register(this.form.usernameBox.value, this.form.passwordBox.value, this.form.confirmPasswordBox.value)">Register</button>
+                <button type="button" class="btn btn-primary" id="registerButton" onclick="register(this.form.usernameBox.value, this.form.passwordBox.value, this.form.confirmPasswordBox.value)">Register</button>
             </form>
         </div>
     </body>

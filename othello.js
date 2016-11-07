@@ -1,4 +1,4 @@
-
+  var turn = "1";
   var bw = 400;
   var bh = 400;
   var p = 0;
@@ -71,10 +71,20 @@
       } else if(board[i]["color"] == "clear") {
         context.clearRect(x-24 , y-24, 49, 49);
       }
+      else if(board[i]["color"] == "viable") {
+        context.beginPath();
+        context.arc(x, y, 1, 0, Math.PI*2, true);
+        context.closePath();
+        context.fillStyle = "#000000";
+        context.fill();
+      }
     }
   }
+
   drawBoard();
+
   showScore();
+
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -88,6 +98,7 @@
     var posy = pos.y;
     var x;
     var y;
+    var canaddturn;
     if(posx <= 50) {
       x = 25;
     } else if(posx <= 100) {
@@ -161,13 +172,120 @@
       boardy = 7;
     }
     for (var i = 0;i < 64;i++){
-      if(board[i]["x"] == boardx && board[i]["y"] == boardy) {
-        board[i]["color"] = "black";
+      if(board[i]["x"] == boardx && board[i]["y"] == boardy /* && board[i]["color"] == "clear"  */ ) {
+        canaddturn = 1;
+        if ((turn % 2) != 0)
+        {
+          board[i]["color"] = "black";
+        }
+        else
+        {
+          board[i]["color"] = "white";
+        }
       }
+    }
+    if (canaddturn)
+    {
+      console.log(turn);
+      turn++;
     }
     console.log(board);
     drawBoard();
-	showScore();
+    showScore();
+  }
+
+  function findViableMoves(event)
+  {
+    console.log(turn);
+    var color;
+    var countercolor;
+    if ((turn % 2) != 0)
+    {
+      color = "white";
+      countercolor = "black"
+    }
+    else
+    {
+      color = "black";
+      countercolor = "white";
+    }
+    for (var i = 0; i < 64; i++) {
+      if(board[i]["color"] == "viable")
+      {
+        board[i]["color"] = "clear";
+      }
+      else if(board[i]["color"] == color)
+      {
+        // console.log(board[i]);
+        var current = board[i];
+
+        var left = board[i-1];
+        var right = board[i+1];
+
+
+        var up = board[i-8];
+        var down = board[i+8];
+
+        var upRight = board[i-7];
+        var upLeft = board[i-9];
+
+        var downRight = board[i+7];
+        var downLeft = board[i+9];
+
+        var pairs =
+        [
+          [down, up, 0],
+          [right, left, 1],
+          [upRight, downLeft, 2],
+          [upLeft, downRight, 3],
+        ];
+        // console.log("Array");
+        // console.log(pairs[0][2]);
+        // for (var ind = 0; ind < pairs.length; ind++) {
+          if (down["color"] == countercolor)
+          {
+            if (!up)
+            {
+              console.log("stable piece");
+            }
+            else if (up["color"] == "clear")
+            {
+              up["color"] = "viable";
+            }
+            else if (up["color"] == color)
+            {
+              for (var i2 = 1; i2 < 8; i2++) {
+
+                var mpc = i - 8 * i2;
+                if (mpc > 0 && mpc < 64)
+                {
+                  var check = board[mpc];
+                  if (check["color"] == color)
+                  {
+                    continue;
+                  }
+                  else if (check["color"] == "clear" || check["color"] == "viable")
+                  {
+                    check["color"] = "viable";
+                    break;
+                  }
+                  else if (check["color"] == countercolor)
+                  {
+                    break;
+                  }
+                }
+                else
+                {
+                  i2 = 8 ;
+                }
+
+              }
+            }
+          }
+        // }
+      }
+      drawDisk(event);
+    }
   }
 
   function newGame() {
