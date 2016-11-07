@@ -324,11 +324,14 @@
 			  var y_pre_diff = y_check - y_previous;
 			  var x_next_diff = x_check - x_next;
 			  var y_next_diff = y_check - y_next;
-          if (!counterdir)
+          
+		if ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
+		{
+		  if (!counterdir)
           {
             console.log("stable piece");
           }
-          else if ((dir["color"] == "clear")&&((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1)))
+          else if ((dir["color"] == "clear"))
           {
 			      dir["color"] = "viable";
 				  console.log("x_check : " + x_check);
@@ -337,7 +340,7 @@
 			  console.log("y_of_i : " + y_previous);
 			  console.log("i : " + i);
           }
-          else if (dir["color"] == color)
+          else if ((dir["color"] == color))
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i + add * i2;
@@ -346,18 +349,22 @@
 			  { 
 			  var x_check = board[mpc]["x"];
 			  var x_previous = board[mpc-add]["x"];
+			  var x_next = board[mpc+add]["x"];
 			  
 			  var y_check = board[mpc]["y"];
 			  var y_previous = board[mpc-add]["y"];
+			  var y_next = board[mpc+add]["y"];
 			  
-			  var x_diff = x_check - x_previous;
-			  var y_diff = y_check - y_previous;
+			  var x_pre_diff = x_check - x_previous;
+			  var y_pre_diff = y_check - y_previous;
+			  var x_next_diff = x_check - x_next;
+			  var y_next_diff = y_check - y_next;
 			  
 			  /*console.log("x_diff : " + x_diff);
 			  console.log("y_diff : " + y_diff);
 			  console.log("mpc : " + mpc);*/
 			  
-			  if  ((x_diff >= -1) && (x_diff <= 1) && (y_diff >= -1) && (y_diff <= 1))
+			  if  ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
               {
                 var check = board[mpc];
 				
@@ -384,6 +391,7 @@
             }
           }
         }
+		}
   }
 
 
