@@ -194,6 +194,7 @@
     }
     drawBoard();
     showScore();
+	findViableMoves();
   }
 
   Array.prototype.contains = function(obj) {
@@ -263,6 +264,12 @@
 		var right_edge = [
 		  7,15,23,31,39,47,55,63
 		];
+		var up_edge = [
+		  0,1,2,3,4,5,6,7
+		];
+		var down_edge = [
+		  63,62,61,60,59,58,57,56
+		]
 	
         console.log(sides);
         // console.log("Array");
@@ -286,7 +293,7 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i + 8 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !down_edge.contains(mpc))
               {
                 var check = board[mpc];
                 if (check["color"] == color)
@@ -303,6 +310,10 @@
                 {
                   break;
                 }
+				if (down_edge.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -330,7 +341,7 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i - 8 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !up_edge.contains(mpc))
               {
                 var check = board[mpc];
                 if (check["color"] == color)
@@ -346,6 +357,10 @@
                 {
                   break;
                 }
+				if (up_edge.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -356,7 +371,7 @@
           }
 		}
 	}
-
+if (i>0 && i<64) {
         if (left["color"] == countercolor)
         {
           if (sides.indexOf(i) != -1)
@@ -371,14 +386,11 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i + 1 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !right_edge.contains(mpc))
               {
                 var check = board[mpc];
-                if (!left_edge.contains(mpc))
-				{
-					break;
-				}
-				else if (check["color"] == color)
+                
+				if (check["color"] == color)
                 {
                   continue;
                 }
@@ -391,6 +403,10 @@
                 {
                   break;
                 }
+				if (right_edge.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -400,7 +416,8 @@
             }
           }
         }
-
+}
+if (i>0 && i<64) {
         if (right["color"] == countercolor)
         {
           if (sides.indexOf(i) != -1)
@@ -415,14 +432,11 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i - 1 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !left_edge.contains(mpc))
               {
                 var check = board[mpc];
-				if (!right_edge.contains(mpc))
-				{
-					break;
-				}
-                else if (check["color"] == color)
+				
+                 if (check["color"] == color)
                 {
                   continue;
                 }
@@ -435,6 +449,10 @@
                 {
                   break;
                 }
+				if (left_edge.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -444,7 +462,8 @@
             }
           }
         }
-	if(i>6)
+}
+	if(i>6 && i<56 )
 	{
         if (upRight["color"] == countercolor)
         {
@@ -460,13 +479,10 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i + 7 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 62 && !sides.contains(mpc))
               {
                 var check = board[mpc];
-				if (!sides.contains(mpc))
-				{
-					break;
-				}
+				
                 if (check["color"] == color)
                 {
                   continue;
@@ -480,6 +496,10 @@
                 {
                   break;
                 }
+				if (sides.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -490,7 +510,7 @@
           }
         }
 	}
-	if(i<55)
+	if(i<57)
 	{
         if (downLeft["color"] == countercolor)
         {
@@ -506,13 +526,10 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i - 7 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 2 && mpc < 64 && !sides.contains(mpc))
               {
                 var check = board[mpc];
-				if (!sides.contains(mpc))
-				{
-					break;
-				}
+				
                 if (check["color"] == color)
                 {
                   continue;
@@ -526,6 +543,10 @@
                 {
                   break;
                 }
+				if (sides.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -552,13 +573,10 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i + 9 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !sides.contains(mpc))
               {
                 var check = board[mpc];
-				if (!sides.contains(mpc))
-				{
-					break;
-				}
+				
                 if (check["color"] == color)
                 {
                   continue;
@@ -572,6 +590,10 @@
                 {
                   break;
                 }
+				if (sides.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
@@ -582,7 +604,7 @@
           }
 		}
 	}
-	if(i<57)
+	if(i<55)
 	{
         if (downRight["color"] == countercolor)
         {
@@ -598,13 +620,10 @@
           {
             for (var i2 = 1; i2 < 8; i2++) {
               var mpc = i - 9 * i2;
-              if (mpc > 0 && mpc < 64)
+              if (mpc >= 0 && mpc < 64 && !sides.contains(mpc))
               {
                 var check = board[mpc];
-				if (!sides.contains(mpc))
-				{
-					break;
-				}
+				
                 if (check["color"] == color)
                 {
                   continue;
@@ -618,6 +637,10 @@
                 {
                   break;
                 }
+				if (sides.contains(mpc))
+				{
+					break;
+				}
               }
               else
               {
