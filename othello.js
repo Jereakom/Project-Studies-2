@@ -309,23 +309,33 @@
     {
       counterdir = upRight;
     }
+	
     if (counterdir["color"] == countercolor)
         {
-			var x_check = dir["x"];
-			  var x_previous = board[i]["x"];
+			var x_check = board[i]["x"];
+			  var x_previous = board[i-add]["x"];
+			  var x_next = board[i+add]["x"];
 			  
-			  var y_check = dir["y"];
-			  var y_previous = board[i]["y"];
+			  var y_check = board[i]["y"];
+			  var y_previous = board[i-add]["y"];
+			  var y_next = board[i+add]["y"];
 			  
-			  var x_diff = x_check - x_previous;
-			  var y_diff = y_check - y_previous;
+			  var x_pre_diff = x_check - x_previous;
+			  var y_pre_diff = y_check - y_previous;
+			  var x_next_diff = x_check - x_next;
+			  var y_next_diff = y_check - y_next;
           if (!counterdir)
           {
             console.log("stable piece");
           }
-          else if ((dir["color"] == "clear")&&((x_diff >= -1) && (x_diff <= 1) && (y_diff >= -1) && (y_diff <= 1)))
+          else if ((dir["color"] == "clear")&&((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1)))
           {
 			      dir["color"] = "viable";
+				  console.log("x_check : " + x_check);
+				  console.log("x_of_i : " + x_previous);
+			  console.log("y_check : " + y_check);
+			  console.log("y_of_i : " + y_previous);
+			  console.log("i : " + i);
           }
           else if (dir["color"] == color)
           {
