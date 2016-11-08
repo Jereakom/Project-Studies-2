@@ -117,10 +117,6 @@
         context.closePath();
         context.fillStyle = "#000000";
         context.fill();
-        if(board[i]["color"] == "viable")
-        {
-          board[i]["color"] = "clear";
-        }
       }
     }
   }
@@ -136,9 +132,20 @@
     var rect = canvas.getBoundingClientRect();
     return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
   }
+  
+   function clearViableMoves()
+  {
+    for (var i = 0; i < 64; i++)
+    {
+      if(board[i]["color"] == "viable")
+      {
+        board[i]["color"] = "clear";
+      }
+    }
+  }
   function drawDisk(e)
   {
-    var pos = getMousePos(canvas, e);
+	var pos = getMousePos(canvas, e);
     var posx = pos.x;
     var posy = pos.y;
     var x;
@@ -249,7 +256,7 @@
     } else if (y == 375) {
       boardy = 7;
     }
-    for (var i = 0;i < 64;i++){
+	for (var i = 0;i < 64;i++){
       if(board[i]["x"] == boardx && board[i]["y"] == boardy) {
         canaddturn = 1;
         if ((turn % 2) != 0)
@@ -261,14 +268,16 @@
           board[i]["color"] = "white";
         }
       }
-    }
-    if (canaddturn)
+    }if (canaddturn)
     {
       turn++;
+	  console.log("turn + 1")
     }
     drawBoard();
     showScore();
+	clearViableMoves();
     findViableMoves();
+	randomAI();		
   }
 
   Array.prototype.contains = function(obj)
