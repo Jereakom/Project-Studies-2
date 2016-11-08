@@ -461,6 +461,63 @@
 	  showScore();
   }
 
+  function getWinner()
+  {
+    for (var i = 0; i < 64; i++)
+    {
+      var viability = 0;
+      var blackScore = 0;
+      var whiteScore = 0;
+
+      var gameRequestArray = {};
+      var id = localStorage.getItem("userId");
+      var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
+
+      if (board[i]["color"] == "viable")
+      {
+        viability++;
+      }
+      else if (board[i]["color"] == "black")
+      {
+        blackScore++;
+      }
+      else if (board[i]["color"] == "white")
+      {
+        whiteScore++;
+      }
+      if (viability == 0)
+      {
+        var winner;
+        if (blackScore == whiteScore)
+        {
+          winner = "tie";
+        }
+        else if (blackScore > whiteScore)
+        {
+          gameRequestArray = {"win":1};
+        }
+        else
+        {
+          winner = "white";
+        }
+
+        logRequest.send(gameRequestJSON);
+        var gameRequestJSON = JSON.stringify(gameRequestArray);
+
+        logRequest = new XMLHttpRequest();
+        logRequest.open("POST", url, false);
+        logRequest.setRequestHeader("Content-type", "application/json");
+        logRequest.onreadystatechange = function ()
+        {
+          if (logRequest.readyState == 4 && logRequest.status == 200)
+          {
+            gameReturnJSON = JSON.parse(logRequest.responseText);
+          }
+        }
+      }
+    }
+  }
+
   function getPlayerScore()
   {
   	for (var i = 0; i < 64; i++)
