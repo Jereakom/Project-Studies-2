@@ -7,6 +7,8 @@
   var board = JSON.parse(boardArray);
   var blackdiskCount = 0;
   var whitediskCount = 0;
+  var disksToFlip = new Array(64);
+
   function drawBoard()
   {
     for (var x = 0; x <= bw; x += 50)
@@ -109,6 +111,9 @@
       else if(board[i]["color"] == "clear")
       {
         context.clearRect(x-24 , y-24, 49, 49);
+        context.fillStyle = "#123123";
+        context.font = "12px Arial";
+        context.fillText(i, x, y);
       }
       else if(board[i]["color"] == "viable")
       {
@@ -117,10 +122,7 @@
         context.closePath();
         context.fillStyle = "#000000";
         context.fill();
-        if(board[i]["color"] == "viable")
-        {
-          board[i]["color"] = "clear";
-        }
+
       }
     }
   }
@@ -136,6 +138,18 @@
     var rect = canvas.getBoundingClientRect();
     return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
   }
+
+  function clearViableMoves()
+  {
+    for (var i = 0; i < 64; i++)
+    {
+      if(board[i]["color"] == "viable")
+      {
+        board[i]["color"] = "clear";
+      }
+    }
+  }
+
   function drawDisk(e)
   {
     var pos = getMousePos(canvas, e);
@@ -250,7 +264,7 @@
       boardy = 7;
     }
     for (var i = 0;i < 64;i++){
-      if(board[i]["x"] == boardx && board[i]["y"] == boardy) {
+      if(board[i]["x"] == boardx && board[i]["y"] == boardy && board[i]["color"] == "viable") {
         canaddturn = 1;
         if ((turn % 2) != 0)
         {
@@ -260,6 +274,20 @@
         {
           board[i]["color"] = "white";
         }
+        for (var i2 = 0; i2 < disksToFlip[i].length; i2++)
+        {
+          var diskFinder = disksToFlip[i][i2];
+          board[diskFinder]["color"];
+          if ((turn % 2) != 0)
+          {
+            board[diskFinder]["color"] = "black";
+          }
+          else
+          {
+            board[diskFinder]["color"] = "white";
+          }
+        }
+        disksToFlip = new Array(64);
       }
     }
     if (canaddturn)
@@ -268,6 +296,7 @@
     }
     drawBoard();
     showScore();
+    clearViableMoves();
     findViableMoves();
   }
 
@@ -346,14 +375,14 @@
           63,62,61,60,59,58,57,56
         ]
 
-        if(i<56 && i>7) {checkViable(-8, up, up_edge);}
-        if(i>7 && i<56) {checkViable(8, down, down_edge);}
+        if (i<56 && i>7) {checkViable(-8, up, up_edge);}
+        if (i>7 && i<56) {checkViable(8, down, down_edge);}
         if (i>0 && i<63) {checkViable(-1, left, left_edge);}
         if (i>0 && i<63) {checkViable(1, right, right_edge);}
-        if(i<55 && i>8) {checkViable(-9, upLeft, sides);}
-        if(i<57 && i>6) {checkViable(-7, upRight, sides);}
-        if(i>6 && i<57) {checkViable(7, downLeft, sides);}
-        if(i>8 && i<55) {checkViable(9, downRight, sides);}
+        if (i<55 && i>8) {checkViable(-9, upLeft, sides);}
+        if (i<57 && i>6) {checkViable(-7, upRight, sides);}
+        if (i>6 && i<57) {checkViable(7, downLeft, sides);}
+        if (i>8 && i<55) {checkViable(9, downRight, sides);}
 
         function checkViable(add, dir, edge) {
           if (dir == up)
@@ -399,12 +428,25 @@
 
         		if ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
         		{
+              // console.log(disksToFlip[i+add]);
+              var tempArray = [];
         		  if (!counterdir)
               {
                 console.log("stable piece");
               }
               else if ((dir["color"] == "clear"))
               {
+                if (disksToFlip[i+add])
+                {
+                  if (disksToFlip[i+add].length != 0)
+                  {
+                    console.log("beer");
+                    tempArray = disksToFlip[i+add];
+                    // console.log(tempArray);
+                  }
+                }
+                tempArray.push(i);
+                disksToFlip.splice(i + add, 1, tempArray);
       		      dir["color"] = "viable";
               }
               else if ((dir["color"] == color))
@@ -429,11 +471,17 @@
 
                       if (check["color"] == color)
                       {
+                        if(tempArray.length == 0)
+                        {
+                          tempArray.push(mpc - add);
+                        }
+                        tempArray.push(mpc);
                         continue;
                       }
                       else if (check["color"] == "clear" || check["color"] == "viable")
                       {
       				          check["color"] = "viable";
+                        disksToFlip.splice(mpc, 1, tempArray);
                         break;
                       }
                       else if (check["color"] == countercolor)
