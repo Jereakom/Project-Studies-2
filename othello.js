@@ -129,6 +129,8 @@
 
   showScore();
 
+  findViableMoves();
+
   function getMousePos(canvas, evt)
   {
     var rect = canvas.getBoundingClientRect();
