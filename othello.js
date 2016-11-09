@@ -111,9 +111,6 @@
       else if(board[i]["color"] == "clear")
       {
         context.clearRect(x-24 , y-24, 49, 49);
-        // context.fillStyle = "#123123";
-        // context.font = "12px Arial";
-        // context.fillText(i, x, y);
       }
       else if(board[i]["color"] == "viable")
       {
@@ -122,7 +119,6 @@
         context.closePath();
         context.fillStyle = "#000000";
         context.fill();
-
       }
     }
   }
@@ -139,6 +135,9 @@
     return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
   }
 
+
+  
+  
   function clearViableMoves()
   {
     for (var i = 0; i < 64; i++)
@@ -148,16 +147,19 @@
         board[i]["color"] = "clear";
       }
     }
+	disksToFlip = new Array(64);
   }
 
   function drawDisk(e)
   {
-    var pos = getMousePos(canvas, e);
+	var pos = getMousePos(canvas, e);
     var posx = pos.x;
     var posy = pos.y;
     var x;
     var y;
     var canaddturn;
+	var boardx;
+    var boardy;
 
     if(posx <= 50)
     {
@@ -225,8 +227,7 @@
       y = 375;
     }
 
-    var boardx;
-    var boardy;
+
 
     if (x == 25) {
       boardx = 0;
@@ -263,9 +264,14 @@
     } else if (y == 375) {
       boardy = 7;
     }
+	
+	if(e.detail.boardx&&e.detail.boardy){
+		boardx = e.detail.boardx;
+		boardy = e.detail.boardy;
+	}
     for (var i = 0;i < 64;i++){
       if(board[i]["x"] == boardx && board[i]["y"] == boardy && board[i]["color"] == "viable") {
-        canaddturn = 1;
+		canaddturn = 1;
         if ((turn % 2) != 0)
         {
           board[i]["color"] = "black";
@@ -287,17 +293,22 @@
             board[diskFinder]["color"] = "white";
           }
         }
-        disksToFlip = new Array(64);
       }
-    }
-    if (canaddturn)
+    }if (canaddturn)
     {
       turn++;
+	  console.log("turn + 1")
     }
+	
     drawBoard();
     showScore();
-    clearViableMoves();
+	clearViableMoves();
     findViableMoves();
+	if (!((turn % 2) != 0)) {
+		console.log(turn);
+		setTimeout( randomAI, 1000 );
+		}
+			
   }
 
   Array.prototype.contains = function(obj)
@@ -333,7 +344,6 @@
 
       if(board[i]["color"] == color)
       {
-        // console.log(board[i]);
         var current = board[i];
         var left = board[i-1];
         var right = board[i+1];
@@ -443,7 +453,9 @@
                   }
                 }
                 tempArray.push(i);
+				
                 disksToFlip.splice(i + add, 1, tempArray);
+				console.log(disksToFlip);
       		      dir["color"] = "viable";
               }
               else if ((dir["color"] == color))
@@ -600,3 +612,5 @@ function showScore()
 	getPlayerScore();
 	getOpponentScore();
 }
+
+
