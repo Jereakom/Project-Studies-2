@@ -265,13 +265,14 @@
       boardy = 7;
     }
 	
-	if(e.detail.boardx&&e.detail.boardy){
+	if((typeof(e.detail.boardx) !== 'undefined')&&(typeof(e.detail.boardy) !== 'undefined')){
 		boardx = e.detail.boardx;
 		boardy = e.detail.boardy;
 	}
+	
     for (var i = 0;i < 64;i++){
       if(board[i]["x"] == boardx && board[i]["y"] == boardy && board[i]["color"] == "viable") {
-		canaddturn = 1;
+		//canaddturn = 1;
         if ((turn % 2) != 0)
         {
           board[i]["color"] = "black";
@@ -294,19 +295,15 @@
           }
         }
       }
-    }if (canaddturn)
-    {
-      turn++;
-	  console.log("turn + 1")
     }
-	
+      turn++;
     drawBoard();
     showScore();
 	clearViableMoves();
     findViableMoves();
 	if (!((turn % 2) != 0)) {
 		console.log(turn);
-		setTimeout( randomAI, 1000 );
+		randomAI();
 		}
 			
   }
@@ -455,7 +452,7 @@
                 tempArray.push(i);
 				
                 disksToFlip.splice(i + add, 1, tempArray);
-				console.log(disksToFlip);
+				//console.log(disksToFlip);
       		      dir["color"] = "viable";
               }
               else if ((dir["color"] == color))
