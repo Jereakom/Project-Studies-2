@@ -111,9 +111,6 @@
       else if(board[i]["color"] == "clear")
       {
         context.clearRect(x-24 , y-24, 49, 49);
-        /*context.fillStyle = "#123123";
-        context.font = "12px Arial";
-        context.fillText(i, x, y);*/
       }
       else if(board[i]["color"] == "viable")
       {
@@ -272,13 +269,8 @@
 		boardx = e.detail.boardx;
 		boardy = e.detail.boardy;
 	}
-	console.log("boardx : "+boardx);
-	console.log("boardy : "+boardy);
     for (var i = 0;i < 64;i++){
-		console.log("board[i][x] : "+board[i]["x"]);
-		console.log("board[i][y] : "+board[i]["y"]);
       if(board[i]["x"] == boardx && board[i]["y"] == boardy && board[i]["color"] == "viable") {
-        
 		canaddturn = 1;
         if ((turn % 2) != 0)
         {
@@ -301,7 +293,6 @@
             board[diskFinder]["color"] = "white";
           }
         }
-        //disksToFlip = new Array(64);
       }
     }if (canaddturn)
     {
@@ -316,8 +307,7 @@
 	if (!((turn % 2) != 0)) {
 		console.log(turn);
 		setTimeout( randomAI, 1000 );
-		//randomAI();
-		}//setTimeout( randomAI, 1000 );
+		}
 			
   }
 
@@ -354,7 +344,6 @@
 
       if(board[i]["color"] == color)
       {
-        // console.log(board[i]);
         var current = board[i];
         var left = board[i-1];
         var right = board[i+1];
@@ -526,8 +515,10 @@
 
   function newGame()
   {
+    turn = 1;
     board = JSON.parse(boardArray);
     drawBoard();
+    findViableMoves();
 	  showScore();
   }
 
