@@ -428,21 +428,18 @@
 
         		if ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
         		{
-              // console.log(disksToFlip[i+add]);
               var tempArray = [];
         		  if (!counterdir)
               {
                 console.log("stable piece");
               }
-              else if ((dir["color"] == "clear"))
+              else if ((dir["color"] == "clear") || (dir["color"] == "viable"))
               {
                 if (disksToFlip[i+add])
                 {
                   if (disksToFlip[i+add].length != 0)
                   {
-                    console.log("beer");
                     tempArray = disksToFlip[i+add];
-                    // console.log(tempArray);
                   }
                 }
                 tempArray.push(i);
