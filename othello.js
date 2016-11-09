@@ -111,9 +111,9 @@
       else if(board[i]["color"] == "clear")
       {
         context.clearRect(x-24 , y-24, 49, 49);
-        context.fillStyle = "#123123";
-        context.font = "12px Arial";
-        context.fillText(i, x, y);
+        // context.fillStyle = "#123123";
+        // context.font = "12px Arial";
+        // context.fillText(i, x, y);
       }
       else if(board[i]["color"] == "viable")
       {
