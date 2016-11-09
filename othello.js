@@ -8,6 +8,9 @@
   var blackdiskCount = 0;
   var whitediskCount = 0;
   var disksToFlip = new Array(64);
+  var noMove = 0;
+  var skip = false;
+  var has_clear = false;
 
   function drawBoard()
   {
@@ -114,7 +117,7 @@
       }
       else if(board[i]["color"] == "viable")
       {
-        context.beginPath();
+		context.beginPath();
         context.arc(x, y, 1, 0, Math.PI*2, true);
         context.closePath();
         context.fillStyle = "#000000";
@@ -152,6 +155,7 @@
 
   function drawDisk(e)
   {
+if (!skip){
 	var pos = getMousePos(canvas, e);
     var posx = pos.x;
     var posy = pos.y;
@@ -296,16 +300,17 @@
         }
       }
     }
-      turn++;
+     } turn++;
     drawBoard();
     showScore();
 	clearViableMoves();
     findViableMoves();
 	if (!((turn % 2) != 0)) {
 		console.log(turn);
-		randomAI();
+		setTimeout(randomAI,200);
 		}
-			
+		console.log("noMove : " + noMove);
+		
   }
 
   Array.prototype.contains = function(obj)
@@ -507,30 +512,36 @@
         }
       }
     }
+	skipTurnCheck();
+	console.log(skip);
     drawBoard();
   }
 
   function newGame()
   {
     turn = 1;
+	noMove = 0;
     board = JSON.parse(boardArray);
     drawBoard();
     findViableMoves();
 	  showScore();
+	  skip = false;
+  has_clear = false;
+  document.getElementById('winner').innerHTML= "";
   }
 
   function getWinner()
   {
-    for (var i = 0; i < 64; i++)
-    {
+    
       var viability = 0;
       var blackScore = 0;
       var whiteScore = 0;
-
+	  var winner;
       var gameRequestArray = {};
       var id = localStorage.getItem("userId");
       var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
-
+		for (var i = 0; i < 64; i++)
+		{
       if (board[i]["color"] == "viable")
       {
         viability++;
@@ -543,23 +554,26 @@
       {
         whiteScore++;
       }
+	}
       if (viability == 0)
       {
-        var winner;
         if (blackScore == whiteScore)
         {
-          winner = "tie";
+          winner = "It's a tie !";
         }
         else if (blackScore > whiteScore)
         {
-          gameRequestArray = {"win":1};
+          winner = "You won !";
+		  gameRequestArray = {"win":1};
         }
         else
         {
-          winner = "white";
+          winner = "You lost !";
         }
+		document.getElementById('winner').innerHTML= winner;
+		console.log(winner);
 
-        logRequest.send(gameRequestJSON);
+        /*logRequest.send(gameRequestJSON);
         var gameRequestJSON = JSON.stringify(gameRequestArray);
 
         logRequest = new XMLHttpRequest();
@@ -571,9 +585,9 @@
           {
             gameReturnJSON = JSON.parse(logRequest.responseText);
           }
-        }
+        }*/
       }
-    }
+    
   }
 
   function getPlayerScore()
@@ -610,4 +624,33 @@ function showScore()
 	getOpponentScore();
 }
 
+function skipTurnCheck(){
+	var has_viable = false;
+	has_clear = false;
+	for (var i = 0; i < 64; i++)
+    {
+      if (board[i]["color"] == "viable")
+      {
+		has_viable = true;
+	  }
+	  else if (board[i]["color"] == "clear")
+      {
+		has_clear = true;
+	  }
+	}
+	if (has_viable){
+		noMove = 0;
+		skip = false;
+	} else {
+		skip = true;
+		noMove++;
+	}
+	if (noMove == 2 ||((noMove ==1)&&(!has_clear))){
+		getWinner(); 
+		// Not too sure about if both conditions are needed
+		// since it seems to me that you can't have both players pass in Othello.
+		// That if one pass, it will automatically give a viable move to the other...
+		// But I can be wrong !
+	}
+}
 

@@ -17,6 +17,6 @@ function randomAI() {
 	  drawDisk(evt);
         } else {
             console.log("no viable moves");
+			drawDisk(evt);
         }
-    
 }
