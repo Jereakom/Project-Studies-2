@@ -503,8 +503,10 @@
 
   function newGame()
   {
+    turn = 1;
     board = JSON.parse(boardArray);
     drawBoard();
+    findViableMoves();
 	  showScore();
   }
 
