@@ -640,7 +640,7 @@ if (!game_ended){
   var blackScore = 0;
   var whiteScore = 0;
   var winner;
-  var gameRequestArray = {};
+  var gameRequestArray = {"win":0};
   var id = localStorage.getItem("userId");
   var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
 	for (var i = 0; i < 64; i++)
@@ -685,6 +685,8 @@ if (!game_ended){
 	games++;
 	showStats();
 	game_ended = true;
+	saveGame(gameRequestArray);
+	
   }
 }
 }

@@ -31,7 +31,7 @@ userId = null;
 username = null;
 loginReturnJSON = [];
 localStorage.removeItem('username');
-localStorage.removeItem('userid');
+localStorage.removeItem('userId');
 togglelogin();
 
 }
@@ -84,4 +84,24 @@ regRequest.send(registerRequestJSON);
 
 function gotoregister () {
 	window.location.href = "register.html";
+}
+
+function saveGame(gameRequestArray){
+	if (localStorage.getItem("userId") !== null){
+		 var id = localStorage.getItem("userId");
+         var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
+         var gameRequestJSON = JSON.stringify(gameRequestArray);
+         logRequest = new XMLHttpRequest();
+         logRequest.open("POST", url, false);
+         logRequest.setRequestHeader("Content-type", "application/json");
+         logRequest.onreadystatechange = function ()
+         {
+           if (logRequest.readyState == 4 && logRequest.status == 200)
+           {
+             console.log("status 200, we're good !");
+           }
+         }
+		 logRequest.send(gameRequestJSON);
+		 console.log(logRequest.responseText);
+	}
 }
