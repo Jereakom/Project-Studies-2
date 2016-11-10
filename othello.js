@@ -334,6 +334,10 @@ function drawDisk(e)
       }
     }
   }
+  else
+  {
+    turn++;
+  }
   drawBoard();
   showScore();
   clearViableMoves();
@@ -616,6 +620,7 @@ function newGame()
   document.getElementById('winner').innerHTML= "";
   is_player = true;
   document.getElementById("ai_butt").value = "Play for me please...";
+  document.getElementById("ai_butt").style = "display:initial";
 }
 
 function getWinner()
@@ -661,7 +666,8 @@ function getWinner()
 		document.getElementById('winner').innerHTML= winner;
 		console.log(winner);
 		is_player = true;
-  document.getElementById("ai_butt").value = "Play for me please...";
+    document.getElementById("ai_butt").value = "Play for me please...";
+    document.getElementById("ai_butt").style = "display:none";
   }
 }
 
