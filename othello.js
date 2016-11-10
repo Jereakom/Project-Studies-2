@@ -12,6 +12,11 @@ var noMove = 0;
 var skip = false;
 var has_clear = false;
 var is_player = true;
+var ties =0;
+var wins =0;
+var losses =0;
+var games =0;
+var game_ended = false;
 
 function drawBoard()
 {
@@ -621,11 +626,16 @@ function newGame()
   is_player = true;
   document.getElementById("ai_butt").value = "Play for me please...";
   document.getElementById("ai_butt").style = "display:initial";
+  game_ended = false;
+}
+
+function showStats(){
+	document.getElementById("game_stats").innerHTML = "<table style='width: 300px; text-align: center;' class='table table-inverse'><thead><tr><th>Games</th><th>Wins</th><th>Ties</th><th>Losses</th></tr></thead><tbody><tr><td>"+ games +"</td><td>"+ wins +"</td><td>"+ ties +"</td><td>"+ losses +"</td></tr></tbody></table>";
 }
 
 function getWinner()
 {
-
+if (!game_ended){
   var viability = 0;
   var blackScore = 0;
   var whiteScore = 0;
@@ -652,23 +662,31 @@ function getWinner()
   {
     if (blackScore == whiteScore)
     {
-      winner = "It's a tie !";
+      winner = "<h2 style='display:inline; font-weight:bold; color:blue;'>It's a tie !</h2>";
+	  ties++;
     }
     else if (blackScore > whiteScore)
     {
-      winner = "You won !";
+      winner = "<h2 style='display:inline; font-weight:bold; color:green;'>You won !</h2>";
+	  wins++;
+	  console.log("beer");
       gameRequestArray = {"win":1};
     }
     else
     {
-      winner = "You lost !";
+      winner = "<h2 style='display:inline; font-weight:bold; color:red;'>You lost !</h2>";
+	  losses++;
     }
 		document.getElementById('winner').innerHTML= winner;
 		console.log(winner);
 		is_player = true;
     document.getElementById("ai_butt").value = "Play for me please...";
     document.getElementById("ai_butt").style = "display:none";
+	games++;
+	showStats();
+	game_ended = true;
   }
+}
 }
 
 function getPlayerScore()
