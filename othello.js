@@ -11,6 +11,7 @@ var disksToFlip = new Array(64);
 var noMove = 0;
 var skip = false;
 var has_clear = false;
+var is_player = true;
 
 function drawBoard()
 {
@@ -337,12 +338,23 @@ function drawDisk(e)
   showScore();
   clearViableMoves();
   findViableMoves();
-	if (!((turn % 2) != 0))
+	if ((!((turn % 2) != 0))||(!is_player))
   {
 		// console.log(turn);
 		setTimeout(randomAI,200);
 	}
 	// console.log("noMove : " + noMove);
+}
+
+function toggleAIAlone(){
+	is_player = !is_player;
+	if (!is_player){
+		document.getElementById("ai_butt").value = "STOP !!!";
+		randomAI();
+	}
+	else {
+		document.getElementById("ai_butt").value = "Play for me please...";
+	}
 }
 
 Array.prototype.contains = function(obj)
@@ -602,6 +614,8 @@ function newGame()
   skip = false;
   has_clear = false;
   document.getElementById('winner').innerHTML= "";
+  is_player = true;
+  document.getElementById("ai_butt").value = "Play for me please...";
 }
 
 function getWinner()
@@ -646,6 +660,8 @@ function getWinner()
     }
 		document.getElementById('winner').innerHTML= winner;
 		console.log(winner);
+		is_player = true;
+  document.getElementById("ai_butt").value = "Play for me please...";
   }
 }
 
