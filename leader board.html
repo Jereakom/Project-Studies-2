@@ -1,80 +1,68 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="leaderboard.css">
+  <link rel="stylesheet" type="text/css" href="leaderboard.css">
 
-      <title>Othello</title>
-  </head>
-  <body>
-		 <div class ="container">
-       
+  <title>Othello</title>
+</head>
+<body>
+  <div class ="container">
+    <script>
+    var xmlhttp = new XMLHttpRequest();
+    var url = "https://project-studies-2.herokuapp.com/leaderboards";
 
+    xmlhttp.onreadystatechange = function()
+    {
+      if (this.readyState == 4 && this.status == 200)
+      {
+        var myArr = JSON.parse(this.responseText);
+        myFunction(myArr);
+      }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
 
-         <script>	
-				var xmlhttp = new XMLHttpRequest();
-				var url = "https://project-studies-2.herokuapp.com/leaderboards";
+    function myFunction(arr)
+    {
+      var i;
+      var table = document.getElementById("myTable");
+      for(i = 0; i < arr.length; i++)
+      {
+        var row = table.insertRow(i+1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        cell1.innerHTML = arr[i].username;
+        cell2.innerHTML = arr[i].games;
+        cell3.innerHTML = arr[i].wins;
+      }
+    }
+    </script>
 
-				xmlhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						var myArr = JSON.parse(this.responseText);
-						myFunction(myArr);
-						console.log(myArr);
-					}
-				};
-				xmlhttp.open("GET", url, true);
-				xmlhttp.send();
+    <p class = "game_header">Othello</p>
 
-				function myFunction(arr) {	
-					
-					var i;
-									
-					var table = document.getElementById("myTable");
+    <div style="float:right;">
+      <a href="index.html" class="myButton">Main Page</a>
+      <br/>
+    </div>
 
-					for(i = 0; i < arr.length; i++) {
-					
-						console.log(arr[i].username);
-						console.log(arr[i].games);
-						console.log(arr[i].wins);
-						
-						var row = table.insertRow(i+1);
-						var cell1 = row.insertCell(0);
-						var cell2 = row.insertCell(1);
-						var cell3 = row.insertCell(2);
+    <div id="result"></div>
+    <table  id="myTable" width = "80%" >
+      <tr>
+        <th>Player</th>
+        <th>Games</th>
+        <th>Wins</th>
+      </tr>
+    </table>
 
-						cell1.innerHTML = arr[i].username;
-						cell2.innerHTML = arr[i].games;
-						cell3.innerHTML = arr[i].wins;						
-					}
-				}
-		</script>
-        
-
-		<p class = "game_header">Othello</p>
-
-		<div style="float:right;">
-			<a href="index.html" class="myButton">Main Page</a>
-			<br/>
-
-		</div>
-
-		<div id="result"></div>
-		<table  id="myTable" width = "80%" >
-			<tr>
-				<th>Player</th>
-				<th>Games</th>
-				<th>Wins</th>
-			</tr>			
-		</table>
-
-		
-</div>
-  </body>
-   <script src="leader.js"></script>
+  </div>
+</body>
+<script src="leader.js"></script>
 </html>

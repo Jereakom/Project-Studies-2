@@ -103,6 +103,7 @@ function drawBoard()
 
     if(board[i]["color"] == "white")
     {
+      context.clearRect(x-24 , y-24, 49, 49);
       context.beginPath();
       context.arc(x, y, 20, 0, Math.PI*2, true);
       context.closePath();
@@ -111,6 +112,7 @@ function drawBoard()
     }
     else if(board[i]["color"] == "black")
     {
+      context.clearRect(x-24 , y-24, 49, 49);
       context.beginPath();
       context.arc(x, y, 20, 0, Math.PI*2, true);
       context.closePath();
@@ -123,10 +125,10 @@ function drawBoard()
     }
     else if(board[i]["color"] == "viable")
     {
-	context.beginPath();
-      context.arc(x, y, 1, 0, Math.PI*2, true);
+      context.beginPath();
+      context.rect(x-24, y-24, 49, 49);
       context.closePath();
-      context.fillStyle = "#000000";
+      context.fillStyle = "#1aff1a";
       context.fill();
     }
   }
@@ -163,13 +165,13 @@ function drawDisk(e)
 {
   if (!skip)
   {
-  	var pos = getMousePos(canvas, e);
+    var pos = getMousePos(canvas, e);
     var posx = pos.x;
     var posy = pos.y;
     var x;
     var y;
     var canaddturn;
-	  var boardx;
+    var boardx;
     var boardy;
 
     if(posx <= 50)
@@ -304,11 +306,11 @@ function drawDisk(e)
       boardy = 7;
     }
 
-  	if((typeof(e.detail.boardx) !== 'undefined')&&(typeof(e.detail.boardy) !== 'undefined'))
+    if((typeof(e.detail.boardx) !== 'undefined')&&(typeof(e.detail.boardy) !== 'undefined'))
     {
-  		boardx = e.detail.boardx;
-  		boardy = e.detail.boardy;
-  	}
+      boardx = e.detail.boardx;
+      boardy = e.detail.boardy;
+    }
 
     for (var i = 0;i < 64;i++)
     {
@@ -347,23 +349,26 @@ function drawDisk(e)
   showScore();
   clearViableMoves();
   findViableMoves();
-	if ((!((turn % 2) != 0))||(!is_player))
+  if ((!((turn % 2) != 0))||(!is_player))
   {
-		// console.log(turn);
-		setTimeout(randomAI,200);
-	}
-	// console.log("noMove : " + noMove);
+    // console.log(turn);
+    setTimeout(randomAI,200);
+  }
+  // console.log("noMove : " + noMove);
 }
 
-function toggleAIAlone(){
-	is_player = !is_player;
-	if (!is_player){
-		document.getElementById("ai_butt").value = "STOP !!!";
-		randomAI();
-	}
-	else {
-		document.getElementById("ai_butt").value = "Play for me please...";
-	}
+function toggleAIAlone()
+{
+  is_player = !is_player;
+  if (!is_player)
+  {
+    document.getElementById("ai_butt").value = "STOP !!!";
+    randomAI();
+  }
+  else
+  {
+    document.getElementById("ai_butt").value = "Play for me please...";
+  }
 }
 
 Array.prototype.contains = function(obj)
@@ -428,14 +433,14 @@ function findViableMoves()
         0,1,2,3,4,5,6,7,8,15,16,23,24,31,32,39,40,47,48,55,56,57,58,59,60,61,62,63
       ];
 
-  		var left_edge =
+      var left_edge =
       [
-  		  0,8,16,24,32,40,48,56
-  		];
-  		var right_edge =
+        0,8,16,24,32,40,48,56
+      ];
+      var right_edge =
       [
-  		  7,15,23,31,39,47,55,63
-  		];
+        7,15,23,31,39,47,55,63
+      ];
       var up_edge =
       [
         0,1,2,3,4,5,6,7
@@ -515,23 +520,23 @@ function findViableMoves()
 
         if (counterdir["color"] == countercolor)
         {
-    		  var x_check = board[i]["x"];
-    		  var x_previous = board[i-add]["x"];
-    		  var x_next = board[i+add]["x"];
+          var x_check = board[i]["x"];
+          var x_previous = board[i-add]["x"];
+          var x_next = board[i+add]["x"];
 
-    		  var y_check = board[i]["y"];
-    		  var y_previous = board[i-add]["y"];
-    		  var y_next = board[i+add]["y"];
+          var y_check = board[i]["y"];
+          var y_previous = board[i-add]["y"];
+          var y_next = board[i+add]["y"];
 
-    		  var x_pre_diff = x_check - x_previous;
-    		  var y_pre_diff = y_check - y_previous;
-    		  var x_next_diff = x_check - x_next;
-    		  var y_next_diff = y_check - y_next;
+          var x_pre_diff = x_check - x_previous;
+          var y_pre_diff = y_check - y_previous;
+          var x_next_diff = x_check - x_next;
+          var y_next_diff = y_check - y_next;
 
-      		if ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
-      		{
+          if ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1)&&(x_next_diff >= -1) && (x_next_diff <= 1) && (y_next_diff >= -1) && (y_next_diff <= 1))
+          {
             var tempArray = [];
-      		  if (!counterdir)
+            if (!counterdir)
             {
               console.log("stable piece");
             }
@@ -546,7 +551,7 @@ function findViableMoves()
               }
               tempArray.push(i);
               disksToFlip.splice(i + add, 1, tempArray);
-    		      dir["color"] = "viable";
+              dir["color"] = "viable";
             }
             else if ((dir["color"] == color))
             {
@@ -554,17 +559,17 @@ function findViableMoves()
               {
                 var mpc = i + add * i2;
                 if (mpc >= 0 && mpc < 64)
-    		        {
-          			  var x_check = board[mpc]["x"];
-          			  var x_previous = board[mpc-add]["x"];
+                {
+                  var x_check = board[mpc]["x"];
+                  var x_previous = board[mpc-add]["x"];
 
-          			  var y_check = board[mpc]["y"];
-          			  var y_previous = board[mpc-add]["y"];
+                  var y_check = board[mpc]["y"];
+                  var y_previous = board[mpc-add]["y"];
 
-          			  var x_pre_diff = x_check - x_previous;
-          			  var y_pre_diff = y_check - y_previous;
+                  var x_pre_diff = x_check - x_previous;
+                  var y_pre_diff = y_check - y_previous;
 
-          			  if  ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1))
+                  if  ((x_pre_diff >= -1) && (x_pre_diff <= 1) && (y_pre_diff >= -1) && (y_pre_diff <= 1))
                   {
                     var check = board[mpc];
 
@@ -587,7 +592,7 @@ function findViableMoves()
                         }
                       }
                       disksToFlip.splice(mpc, 1, tempArray);
-    				          check["color"] = "viable";
+                      check["color"] = "viable";
                       break;
                     }
                     else if (check["color"] == countercolor)
@@ -599,11 +604,11 @@ function findViableMoves()
                   {
                     break;
                   }
-    	          }
+                }
               }
             }
           }
-    		}
+        }
       }
     }
   }
@@ -630,133 +635,133 @@ function newGame()
 }
 
 function showStats(){
-	document.getElementById("game_stats").innerHTML = "<table style='width: 300px; text-align: center;' class='table table-inverse'><thead><tr><th>Games</th><th>Wins</th><th>Ties</th><th>Losses</th></tr></thead><tbody><tr><td>"+ games +"</td><td>"+ wins +"</td><td>"+ ties +"</td><td>"+ losses +"</td></tr></tbody></table>";
+  document.getElementById("game_stats").innerHTML = "<table style='width: 300px; text-align: center;' class='table table-inverse'><thead><tr><th>Games</th><th>Wins</th><th>Ties</th><th>Losses</th></tr></thead><tbody><tr><td>"+ games +"</td><td>"+ wins +"</td><td>"+ ties +"</td><td>"+ losses +"</td></tr></tbody></table>";
 }
 
 function getWinner()
 {
-if (!game_ended){
-  var viability = 0;
-  var blackScore = 0;
-  var whiteScore = 0;
-  var winner;
-  var gameRequestArray = {"win":0};
-  var id = localStorage.getItem("userId");
-  var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
-	for (var i = 0; i < 64; i++)
-	{
-    if (board[i]["color"] == "viable")
+  if (!game_ended){
+    var viability = 0;
+    var blackScore = 0;
+    var whiteScore = 0;
+    var winner;
+    var gameRequestArray = {"win":0};
+    var id = localStorage.getItem("userId");
+    var url = "https://project-studies-2.herokuapp.com/users/"+id+"/games";
+    for (var i = 0; i < 64; i++)
     {
-      viability++;
+      if (board[i]["color"] == "viable")
+      {
+        viability++;
+      }
+      else if (board[i]["color"] == "black")
+      {
+        blackScore++;
+      }
+      else if (board[i]["color"] == "white")
+      {
+        whiteScore++;
+      }
     }
-    else if (board[i]["color"] == "black")
+    if (viability == 0)
     {
-      blackScore++;
-    }
-    else if (board[i]["color"] == "white")
-    {
-      whiteScore++;
+      if (blackScore == whiteScore)
+      {
+        winner = "<h2 style='display:inline; font-weight:bold; color:blue;'>It's a tie !</h2>";
+        ties++;
+      }
+      else if (blackScore > whiteScore)
+      {
+        winner = "<h2 style='display:inline; font-weight:bold; color:green;'>You won !</h2>";
+        wins++;
+        console.log("beer");
+        gameRequestArray = {"win":1};
+      }
+      else
+      {
+        winner = "<h2 style='display:inline; font-weight:bold; color:red;'>You lost !</h2>";
+        losses++;
+      }
+      document.getElementById('winner').innerHTML= winner;
+      console.log(winner);
+      is_player = true;
+      document.getElementById("ai_butt").value = "Play for me please...";
+      document.getElementById("ai_butt").style = "display:none";
+      games++;
+      showStats();
+      game_ended = true;
+      saveGame(gameRequestArray);
+
     }
   }
-  if (viability == 0)
-  {
-    if (blackScore == whiteScore)
-    {
-      winner = "<h2 style='display:inline; font-weight:bold; color:blue;'>It's a tie !</h2>";
-	  ties++;
-    }
-    else if (blackScore > whiteScore)
-    {
-      winner = "<h2 style='display:inline; font-weight:bold; color:green;'>You won !</h2>";
-	  wins++;
-	  console.log("beer");
-      gameRequestArray = {"win":1};
-    }
-    else
-    {
-      winner = "<h2 style='display:inline; font-weight:bold; color:red;'>You lost !</h2>";
-	  losses++;
-    }
-		document.getElementById('winner').innerHTML= winner;
-		console.log(winner);
-		is_player = true;
-    document.getElementById("ai_butt").value = "Play for me please...";
-    document.getElementById("ai_butt").style = "display:none";
-	games++;
-	showStats();
-	game_ended = true;
-	saveGame(gameRequestArray);
-	
-  }
-}
 }
 
 function getPlayerScore()
 {
-	for (var i = 0; i < 64; i++)
+  for (var i = 0; i < 64; i++)
   {
-		if (board[i]["color"] == "black")
+    if (board[i]["color"] == "black")
     {
-			blackdiskCount = blackdiskCount + 1;
-		}
-	}
-	var playerScore = blackdiskCount.toString();
-	blackdiskCount = 0;
-	document.getElementById('playerscore').innerHTML= playerScore;
+      blackdiskCount = blackdiskCount + 1;
+    }
+  }
+  var playerScore = blackdiskCount.toString();
+  blackdiskCount = 0;
+  document.getElementById('playerscore').innerHTML= playerScore;
 }
 
 function getOpponentScore()
 {
-	for (var i = 0; i < 64; i++)
+  for (var i = 0; i < 64; i++)
   {
-		if (board[i]["color"] == "white")
+    if (board[i]["color"] == "white")
     {
-			whitediskCount = whitediskCount + 1;
-		}
-	}
-	var opponentScore = whitediskCount.toString();
-	whitediskCount = 0;
-	document.getElementById('opponentscore').innerHTML= opponentScore;
+      whitediskCount = whitediskCount + 1;
+    }
+  }
+  var opponentScore = whitediskCount.toString();
+  whitediskCount = 0;
+  document.getElementById('opponentscore').innerHTML= opponentScore;
 }
 
 function showScore()
 {
-	getPlayerScore();
-	getOpponentScore();
+  getPlayerScore();
+  getOpponentScore();
 }
 
 function skipTurnCheck()
 {
-	var has_viable = false;
-	has_clear = false;
-	for (var i = 0; i < 64; i++)
+  var has_viable = false;
+  has_clear = false;
+  for (var i = 0; i < 64; i++)
   {
     if (board[i]["color"] == "viable")
     {
-		  has_viable = true;
-	  }
-	  else if (board[i]["color"] == "clear")
+      has_viable = true;
+    }
+    else if (board[i]["color"] == "clear")
     {
-		  has_clear = true;
-	  }
-	}
-	if (has_viable)
+      has_clear = true;
+    }
+  }
+  if (has_viable)
   {
-		noMove = 0;
-		skip = false;
-	}
+    noMove = 0;
+    skip = false;
+  }
   else
   {
-		skip = true;
-		noMove++;
-	}
-	if (noMove == 2 ||((noMove ==1)&&(!has_clear)))
+    skip = true;
+    noMove++;
+  }
+  if (noMove == 2 ||((noMove ==1)&&(!has_clear)))
   {
-		getWinner();
-		// Not too sure about if both conditions are needed
-		// since it seems to me that you can't have both players pass in Othello.
-		// That if one pass, it will automatically give a viable move to the other...
-		// But I can be wrong !
-	}
+    getWinner();
+    // Not too sure about if both conditions are needed
+    // since it seems to me that you can't have both players pass in Othello.
+    // That if one pass, it will automatically give a viable move to the other...
+    // But I can be wrong !
+  }
   clicked = 0;
 }

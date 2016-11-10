@@ -20,10 +20,11 @@ function randomAI()
     if (viable_moves.length > 0)
     {
       var random_move_position = viable_moves[Math.floor(Math.random() * (viable_moves.length - 1))];
-      var evt = new CustomEvent('click', {
-        'detail':{
-          'boardx': board[random_move_position]["x"],
-          'boardy': board[random_move_position]["y"]
+      var evt = new CustomEvent('click',
+        {
+          'detail':{
+            'boardx': board[random_move_position]["x"],
+            'boardy': board[random_move_position]["y"]
         }
       });
       drawDisk(evt);
@@ -36,6 +37,6 @@ function randomAI()
   }
   else
   {
-    drawDisk(evt);    
+    drawDisk(evt);
   }
 }

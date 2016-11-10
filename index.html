@@ -1,58 +1,53 @@
 <HTML>
-    <HEAD><title>Othello</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=0.8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
-        <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <HEAD><title>Othello</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <SCRIPT>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-                });
-        </SCRIPT>
-		
-    </HEAD>
-    <body>
-        <div class = "container">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
 
-            <!--Header Part-->
-            <div class="jumbotron">
-                <h1 class= "main_page_header">OTHELLO</h1>
-                <p class="main_page_header_p">Play most amazing board game online.
-                </p>
-            </div> 
+    <SCRIPT>
+    $(document).ready(function()
+    {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    </SCRIPT>
 
-            <!--Form or Input part-->
-            <form class="form-inline">
-                <h2 class="main_page_form_header">Log In</h2>                         
-                <br/><br/>
-                <div class="form-group">
-                     <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email" style =" width : 300px; ">
-                </div><br/><br/>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password" style =" width : 300px; ">
-                </div><br/><br/>
+  </HEAD>
+  <body>
+    <div class = "container">
+      <div class="jumbotron">
+        <h1 class= "main_page_header">OTHELLO</h1>
+        <p class="main_page_header_p">Play most amazing board game online.
+        </p>
+      </div>
 
-                <button type="button" class="btn btn-default" id="loginButton" onclick="login(this.form.usernameBox.value, this.form.passwordBox.value)">Log In</button>
-                <img src ="http://www.freeiconspng.com/uploads/3d-man-question-icon-13.png" style="width:50px;height:50px;" data-toggle="tooltip" data-placement="right" title="Loggin in helps to keep track of the player and it helps to improve the overall system">     
+      <form class="form-inline">
+        <h2 class="main_page_form_header">Log In</h2>
+        <br/><br/>
+        <div class="form-group">
+          <input type="text" class="form-control" id="exampleInputEmail3" name="usernameBox" placeholder="Username or Email" style =" width : 300px; ">
+        </div><br/><br/>
+        <div class="form-group">
+          <input type="password" class="form-control" id="exampleInputPassword3" name="passwordBox" placeholder="Password" style =" width : 300px; ">
+        </div><br/><br/>
 
-            </form>
+        <button type="button" class="btn btn-default" id="loginButton" onclick="login(this.form.usernameBox.value, this.form.passwordBox.value)">Log In</button>
+        <img src ="http://www.freeiconspng.com/uploads/3d-man-question-icon-13.png" style="width:50px;height:50px;" data-toggle="tooltip" data-placement="right" title="Loggin in helps to keep track of the player and it helps to improve the overall system">
 
-            <!--Register Part-->
-            <div class="main_page_register_div_class">
+      </form>
 
-            
-            <p style=" color : green;">Not a member, register by<a href="register.html"> Clicking here</a></p>
-            </div>
+      <div class="main_page_register_div_class">
 
+        <p style=" color : green;">Not a member, register by<a href="register.html"> Clicking here</a></p>
+      </div>
 
-            <div>
-                <a href="main.html" class="myButton">PLAY GAME</a>
-            </div>
-        </div>
-    </body>
-	<script src="connect.js"></script>
+      <div>
+        <a href="main.html" class="myButton">PLAY GAME</a>
+      </div>
+    </div>
+  </body>
+  <script src="connect.js"></script>
 </HTML>
