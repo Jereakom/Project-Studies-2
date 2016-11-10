@@ -85,3 +85,32 @@ regRequest.send(registerRequestJSON);
 function gotoregister () {
 	window.location.href = "register.html";
 }
+
+function profile ()
+{
+	userId = localStorage.getItem('userId');
+	var xmlhttp = new XMLHttpRequest();
+	var url = "https://project-studies-2.herokuapp.com/users";
+
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var myArr = JSON.parse(this.responseText);
+			showProfile(myArr);
+		}
+	};
+	xmlhttp.open("GET", url + "/" + userId, true);
+	xmlhttp.send();
+
+	function showProfile(arr) {
+
+		var table = document.getElementById("profile");
+			var row = table.insertRow(1);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+
+			cell1.innerHTML = arr.username;
+			cell2.innerHTML = arr.games;
+			cell3.innerHTML = arr.wins;
+	}
+}
