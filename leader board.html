@@ -13,8 +13,10 @@
       <title>Othello</title>
   </head>
   <body>
-		 <div>
+		 <div class ="container">
        
+
+
          <script>	
 				var xmlhttp = new XMLHttpRequest();
 				var url = "https://project-studies-2.herokuapp.com/leaderboards";
@@ -53,14 +55,24 @@
 				}
 		</script>
         
+
+		<p class = "game_header">Othello</p>
+
+		<div style="float:right;">
+			<a href="index.html" class="myButton">Main Page</a>
+
+		</div>
+
 		<div id="result"></div>
-		<table  id="myTable" >
+		<table  id="myTable" width = "80%" >
 			<tr>
 				<th>Player</th>
 				<th>Games</th>
 				<th>Wins</th>
 			</tr>			
 		</table>
+
+		
 </div>
   </body>
    <script src="leader.js"></script>
