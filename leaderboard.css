@@ -1,0 +1,76 @@
+body {
+    background-image: url("http://orig07.deviantart.net/d03e/f/2008/148/c/3/wood_floor_by_gnrbishop.jpg");
+    background-repeat: repeat-x-y;
+	}
+
+.game_header{
+    font-family: "Lucida Calligraphy",cursive;
+    font-weight: bold;
+    text-shadow:1px 1px 7px rgba(220,223,227,0.9);
+    font-weight:normal;
+    color:#1E7524;
+    letter-spacing:1pt;
+    word-spacing:2pt;
+    font-size:35px;
+    text-align:left;
+    line-height:1;
+    margin-top:5%; 
+}
+
+.myButton {
+	background-color:#44c767;
+	-moz-border-radius:25px;
+	-webkit-border-radius:25px;
+	border-radius:25px;
+	border:3px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:17px;
+	padding:9px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 13px #2f6627;
+}
+.myButton:hover {
+	background-color:#5cbf2a;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+
+#myTable  {
+	border-collapse:collapse;
+	border-spacing:0;
+	border-color:#999;
+	}
+
+#myTable td{
+	font-family:Arial, sans-serif;
+	font-size:14px;
+	padding:10px 5px;
+	border-style:solid;
+	border-width:1px;
+	overflow:hidden;
+	word-break:normal;
+	border-color:#999;
+	color:#444;
+	background-color:#F7FDFA;
+	}
+
+#myTable th{
+	font-family:Arial, sans-serif;
+	font-size:14px;
+	font-weight:normal;
+	padding:10px 5px;
+	border-style:solid;
+	border-width:1px;
+	overflow:hidden;
+	word-break:normal;
+	border-color:#999;
+	color:#fff;
+	background-color:#26ADE4;
+	}

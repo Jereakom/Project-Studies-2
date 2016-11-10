@@ -1,26 +1,41 @@
-function randomAI() {
-  var viable_moves = [];
-  for (var i = 0; i < 64; i++)
+function randomAI()
+{
+  var play = true;
+  if (is_player)
   {
-    if (board[i]["color"] == "viable")
+    if ((turn % 2) != 0)
     {
-      viable_moves.push(i);
+      play = false;
     }
   }
-  if (viable_moves.length > 0)
-  {
-    var random_move_position = viable_moves[Math.floor(Math.random() * (viable_moves.length - 1))];
-    var evt = new CustomEvent('click', {
-      'detail':{
-        'boardx': board[random_move_position]["x"],
-        'boardy': board[random_move_position]["y"]
+  if (play) {
+    var viable_moves = [];
+    for (var i = 0; i < 64; i++)
+    {
+      if (board[i]["color"] == "viable")
+      {
+        viable_moves.push(i);
       }
-    });
-    drawDisk(evt);
+    }
+    if (viable_moves.length > 0)
+    {
+      var random_move_position = viable_moves[Math.floor(Math.random() * (viable_moves.length - 1))];
+      var evt = new CustomEvent('click', {
+        'detail':{
+          'boardx': board[random_move_position]["x"],
+          'boardy': board[random_move_position]["y"]
+        }
+      });
+      drawDisk(evt);
+    }
+    else
+    {
+      console.log("no viable moves");
+      drawDisk(evt);
+    }
   }
   else
   {
-    console.log("no viable moves");
-    drawDisk(evt);
+    drawDisk(evt);    
   }
 }
