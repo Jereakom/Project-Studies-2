@@ -669,6 +669,7 @@ function getWinner()
       {
         winner = "<h2 style='display:inline; font-weight:bold; color:blue;'>It's a tie !</h2>";
         ties++;
+        gameRequestArray = {"tie":1};
       }
       else if (blackScore > whiteScore)
       {

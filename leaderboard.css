@@ -42,13 +42,13 @@ body {
 
 
 
-#myTable  {
+#leaderboards  {
   border-collapse:collapse;
   border-spacing:0;
   border-color:#999;
 }
 
-#myTable td{
+#leaderboards td{
   font-family:Arial, sans-serif;
   font-size:14px;
   padding:10px 5px;
@@ -61,7 +61,7 @@ body {
   background-color:#F7FDFA;
 }
 
-#myTable th{
+#leaderboards th{
   font-family:Arial, sans-serif;
   font-size:14px;
   font-weight:normal;
