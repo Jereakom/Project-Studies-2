@@ -1,4 +1,5 @@
 An Othello game
+
 An Othello game in which the user can play against an AI, or make the AI play against itself.
 
 The user can choose between multiple difficulty settings for the AI.
